@@ -189,3 +189,8 @@ reshape
 自监督学习，就是提取图片的一部分，去预测图片的另外一部分
 
 （感觉对图像分割的意义不大）
+
+
+
+## UNETR: Transformers for 3D Medical Image Segmentation
+

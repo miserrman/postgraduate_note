@@ -1,0 +1,1353 @@
+\def\CTeXPreproc{Created by ctex v0.2.12, don't edit!}%--------------------------------前两条虚线之前的内容请不要随意改动、删除------------------------------------
+%版芯
+\documentclass[11pt,twoside]{article}
+\usepackage{pifont}
+\headsep 0 true cm \topmargin 0pt \oddsidemargin 0pt \evensidemargin
+0pt \textheight 221mm \textwidth 158mm
+\renewcommand\baselinestretch{1.1}%--------------行间距
+%定义字体及字号
+\newcommand\kaishu{\CJKfamily{kai}}
+\newcommand\heiti{\CJKfamily{hei}}
+\newcommand\songti{\CJKfamily{song}}
+\newcommand\baiti{\CJKfamily{bai}}
+\newcommand{\fangsong}{\CJKfamily{fs}}
+\newcommand{\chuhao}{\fontsize{42pt}{\baselineskip}\selectfont}
+\newcommand{\xiaochuhao}{\fontsize{36pt}{\baselineskip}\selectfont}
+\newcommand{\yihao}{\fontsize{28pt}{\baselineskip}\selectfont}
+\newcommand{\erhao}{\fontsize{21pt}{\baselineskip}\selectfont}
+\newcommand{\xiaoerhao}{\fontsize{18pt}{\baselineskip}\selectfont}
+\newcommand{\sanhao}{\fontsize{15.75pt}{\baselineskip}\selectfont}
+\newcommand{\sihao}{\fontsize{14pt}{\baselineskip}\selectfont}
+\newcommand{\xiaosihao}{\fontsize{12pt}{\baselineskip}\selectfont}
+\newcommand{\wuhao}{\fontsize{10.5pt}{\baselineskip}\selectfont}
+\newcommand{\xiaowuhao}{\fontsize{9pt}{\baselineskip}\selectfont}
+\newcommand{\liuhao}{\fontsize{8.0pt}{\baselineskip}\selectfont}
+\newcommand{\qihao}{\fontsize{5.25pt}{\baselineskip}\selectfont}
+\usepackage{CJK,indentfirst,amsmath,amsfonts,amssymb,amsthm,cite}
+\usepackage[dvips]{graphics}%图形宏包
+\usepackage{graphicx}
+\usepackage[dvips]{color}%色彩宏包
+\usepackage{cite}
+\renewcommand\refname{\xiaowuhao\heiti {参考文献：}}%参考文献
+\setlength{\parindent}{2em}
+\setlength{\jot}{4.5pt}%调节多行公式行间距
+\usepackage{fancyhdr}%页眉宏包
+\usepackage{ifthen}%这个宏包提供逻辑判断命令
+\usepackage{cases}
+\begin{document}
+\begin{CJK*}{GBK}{song}
+\renewcommand\baselinestretch{1.2}
+\renewcommand\arraystretch{1.2}
+\catcode`@=11 \long\def\@makefntext#1{\parindent 2em\indent \hbox
+to 0pt{\hss$^{}$}#1} \catcode`\@=12
+\pagestyle{fancy}%页眉版式
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\setcounter{page}{1} %--------------------------设置起始页码
+\newcounter{jie}
+\renewenvironment{proof}[1][\heiti 证明]{\textbf{#1.} }{
+\begin{flushright}
+$\Box$
+\end{flushright}
+}
+%--------------------------------------------------------正文页眉命令--------------------------------------------------
+\newboolean{first}%定义一个布尔变量用于判断是否为首页
+\setboolean{first}{true}%设定fist变量初值为true
+%-----------------------------------------------------正文页眉页脚设定
+%----------------------------------作者后面的空格也不能删
+%-------------------------------------------------------首页命令--------------------------------------------------------
+
+%--------------------------------------------------文章头----------------------------------------------------
+\title{\erhao\heiti  第五章\ \ \ \textbf{Green}函数法}
+%注意省、市、邮编之间的空格不能没有，按模板
+\date{}
+\maketitle
+\renewcommand\baselinestretch{1.2}
+%----------------------------------------------------正文------------------------------------------------------
+\begin{center}
+\section*{\sihao\heiti  一、基本要求}
+\end{center}
+ 1. 掌握$\delta$ 函数的定义及性质.
+
+ 2.正确理解Green函数的定义, 学会构造各类定解问题的Green函数.
+
+ 3.掌握Dirichlet-Green函数的物理意义和用电像法求Green函数的方法, 记住几种典型区域（半平面、半空间；球域、圆域等）的Green函数.
+
+4.掌握Dirichlet积分公式的构造,
+正确的应用Dirichlet积分公式求解Poisson方程，Laplace方程的Dirichlet问题.
+
+5. 初步了解含时定解问题的积分公式的构造及其应用.
+
+\section*{\sihao\heiti  \center{二、内容提要}}
+
+\vspace*{-0.3cm}
+\subsection*{\wuhao\heiti  （一）\ $\delta$函数}
+1. $\delta$ 函数的定义
+
+  满足下面二式的函数
+\emph{ $$ \left\{
+\begin{array}{c}\delta(x-x_{0})=\left\{\begin{array}{c}0,\quad\quad x\neq x_{0}
+\\*[3pt]
+\infty,\quad x=x_{0}\end{array}\right.
+\\*[3pt]
+\int^{\infty}_{-\infty}\delta(x-x_{0})dx=1
+\end{array}
+\right. $$} 称为$\delta$函数.
+
+2. $\delta$函数的性质
+
+（1）设 $f(x)$在$(-\infty,\infty)$ 上连续，则
+$$\int^{\infty}_{-\infty}f(x)\delta(x-x_{0})dx=f(x_{0})$$
+
+(2)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \
+$\delta(x_{0}-x)=\delta(x-x_{0})$ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \
+
+即， $\delta$函数是一偶函数
+
+(3)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \
+$\delta[\varphi(x)]=\Sigma^{k}_{i=1}\frac{\delta(x-x_{i})}{|\varphi^{\prime}(x_{i})|}$
+
+其中,$\varphi(x_{i})=0(i=1,2,\cdots,k).$
+
+(4)若定义 $\frac{d}{dx}\delta(x)=\delta^{\prime}(x)$称为$\delta$
+函数的导数，则
+$$(x-x_{0})\delta^{\prime}(x-x_{0})=-\delta(x-x_{0})$$
+
+$$\int^{\infty}_{-\infty}f(x)\delta^{(n)}(x-x_{0})dx=(-1)^{(n)}f^{(n)}(x_{0})$$
+$$\delta^{\prime}(x_{0}-x)=-\delta^{\prime}(x-x_{0})$$
+即 $\delta$函数的导数是以奇函数, 其中$f(x)$
+是具有连续导数的任意函数.
+
+3.  高维 $\delta$函数
+
+n维($n\geq2$ 的整数)$\delta$ 函数可视为n个一维$\delta$ 函数的乘积,如
+$$\delta(M-M_{0})=\delta(x-x_{0},y-y_{0},z-z_{0})\hspace*{75pt}$$
+$$=\delta(x-x{0})\delta(y-y_{0})\delta(z-z_{0})$$
+于是易于得到$$\iiint^{\infty}_{-\infty}f(M)\delta(M-M_{0})dxdydz=f(M_{0})$$
+其中$$\delta(M-M_{0})=\left\{\begin{array}{c}0,\quad\quad M\neq
+M_{0}
+\\*[3pt]
+\infty,\quad M=M_{0}\end{array}\right. $$
+$$\iiint^{\infty}_{-\infty}\delta(M-M_{0})dxdydz=1$$
+而$f(M)$在$(-\infty<x,y,z<\infty)$中连续.
+\subsection*{\wuhao\heiti  （二）\ poison方程的边值问题}
+1.poison方程的Green函数
+
+（1）称定解问题 $$\Delta
+G=-\delta(x-x_{0},y-y_{0},z-z_{0})$$的解为三维poison方程的Green函数,
+通过（积分）直接求解, 可求得三维Poison方程的Green函数为
+
+\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \
+\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ $G=\frac{1}{4\pi r}\ \ \ \
+\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \
+\ \ \ \ \ \ \ (2.5.14)$ 又称为三维poison方程的基本解.其中
+
+\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \
+$r=\sqrt{(x-x_{0})^{2}+(y-y_{0})^{2}+(z-z_{0})^{2}}$\ \ \ \ \ \ \ \
+\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (2.5.15)
+为场点$M(x,y,z)$ 和源点$M_{0}(x_{0},y_{0},z_{0})$之间的距离.
+
+（2）称定解问题
+
+\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \
+\ \ \ \ \ \  \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ $\Delta
+G=-\delta(x-x_{0},y-y_{0})$\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \
+\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (2.5.16)
+的解为二维poison方程的Green函数.
+通过直接（积分）求解可求得二维poison方程的Green函数为
+
+\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \
+\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \
+$G=\frac{1}{2\pi}ln\frac{1}{r}$\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \
+\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (2.5.17)
+又称为二维Poison方程的基本解. 其中
+
+\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \
+\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \
+$r=\sqrt{(x-x_{0})^{2}+(y-y_{0})^{2}}$\ \ \ \ \ \ \ \ \ \ \ \ \ \ \
+\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \
+(2.5.18) 为场点$M(x,y)$和源点$M_{0}(x_{0},y_{0})$之间的距离.
+
+2.Dirichlet-Green函数
+
+（1）称定解问题
+
+\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \
+$\left\{\begin{array}{c}\Delta
+G=-\delta(x-x_{0},y-y_{0},z-z_{0}),\quad\quad M\in\tau
+\\*[3pt]
+G|_{\sigma}=0 \ \ \ \ \end{array}\right.$\ \ \ \ \ \ \ \ \ \ \ \ \ \
+\ \ \ \ \ \ \ \ \ \ \ (2.5.19)
+的解为三维Poison方程的Dirichlet-Green函数.
+其中$\delta$区域$\tau$的边界. 易于推得,
+三维Poison方程的Dirichlet-Green函数为
+
+\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \
+\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ $G=\frac{1}{4\pi r}+g$\ \ \ \ \
+\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \
+\ \ \ \ \ \ \ \ \ \ \ \ \ (2.5.20)
+
+\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \
+\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \
+$\left\{\begin{array}{c}\Delta g=0\quad\quad M\in\tau
+\\*[3pt]
+g|_{\sigma}=-\frac{1}{4\pi r}|_{\sigma} \ \ \ \ \end{array}\right.$\
+\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \
+\ \ \ \ \ \ \ \ (2.5.21) 其中, $r$与(2.5.21)式同.
+
+（2）称定解问题
+
+\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \
+$\left\{\begin{array}{c}\Delta G=-\delta(x-x_{0},y-y_{0}),\quad\quad
+M\in\sigma
+\\*[3pt]
+G|_{\iota}=0 \ \ \ \ \end{array}\right.$\ \ \ \ \ \ \ \ \ \ \ \ \ \
+\ \ \ \ \ \ \ \ \ \ \ (2.5.22)
+的解为二维Poison方程的Dirichlet-Green函数.
+其中$\iota$区域$\sigma$的边界. 易于推得,
+二维Poison方程的Dirichlet-Green函数为
+
+\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \
+\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \
+$G=\frac{1}{2\pi}ln\frac{1}{r}+g$\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \
+\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \
+(2.5.23)
+
+\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \
+\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \
+$\left\{\begin{array}{c}\Delta g=0\quad\quad M\in\sigma
+\\*[3pt]
+g|_{\iota}=-\frac{1}{2\pi}ln\frac{1}{r}|_{\iota} \ \ \ \
+\end{array}\right.$\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \
+\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (2.5.24) 其中,
+$r$与(2.5.18)式同.
+
+(3) Dirichlet-Green 函数的物理意义以三维情况为例，如图2.26所示,
+设$\sigma$为空间接地的导电壳,在其中
+$M_{0}(x_{0},y_{0},z_{0})$点置有一个电量为$\varepsilon_{0}$的正电荷,则由电学知识知,
+满足$(2.5.20)-(2.5.21)$式的G正好就$\sigma$内任一点$M(x,y,z)(M\neq
+M_{0})$点处的电位.
+它由正点电荷$\varepsilon_{0}$所提供的电位$\frac{1}{4\pi
+r}$和$\varepsilon_{0}$在边界面$\sigma$上的感应电荷所提供的电位$g$两部分组成.
+故求满足$(2.5.20)-(2.5.21)$式的G的问题,
+就转化为了求感应电荷产生的电位$g$的问题.
+
+(4) Dirichlet-Green 函数的求法\ \ \ \ Dirichlet-Green
+函数可用本征函数展开法(略)和电像发(见后面例题)来求.
+用电像发已求得几个常用的Dirichlet-Green 函数
+
+$1^{\circ}$\ \ 半空间的Dirichlet-Green 函数即点解问题
+
+\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \
+$\left\{\begin{array}{c}\Delta
+G=-\delta(x-x_{0},y-y_{0},z-z_{0}),\quad\quad z>0 $或 $z<0
+\\*[3pt]
+G|_{z=0}=0 \ \ \ \ \end{array}\right.$\ \ \ \ \ \ \ \ \ \ \ \ \ \ \
+\ \ \ \ \ \ \ \ \ \ (2.5.25) 的解为
+
+\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \
+\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ $G=\frac{1}{4\pi
+r}-\frac{1}{4\pi r_{1}}$\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \
+\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (2.5.26)
+其中,
+
+\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \
+\ \ \ $r_{1}=\sqrt{(x-x_{1})^{2}+(y-y_{1})^{2}+(z-z_{1})^{2}}$\ \ \
+\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \
+\ \ \ \ (2.5.27) 为场点$M(x,y,z)$
+和源点$M_{0}(x_{0},y_{0},z_{0})$关于边界
+$z=0$的像点$M_{1}(x_{1},y_{1},z_{1})$之间的距离, r与(2.5.15)式相同.
+
+$2^{\circ}$\ 球域的Dirichlet-Green 函数即点解问题
+
+\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \
+$\left\{\begin{array}{c}\Delta
+G=-\delta(x-x_{0},y-y_{0},z-z_{0}),\quad\quad \rho<a$或 $\rho>a
+\\*[3pt]
+G|_{\rho=a}=0 \ \ \ \ \end{array}\right.$\ \ \ \ \ \ \ \ \ \ \ \ \ \
+\ \ \ \ \ \ \ \ \ \ \ (2.5.28) 的解为
+
+\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \
+\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ $G=\frac{1}{4\pi r}-\frac{a/\rho
+_{0}}{4\pi r_{1}}$\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \
+\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (2.5.29)
+其中,$\rho=a$为坐标原点
+O为中心的球的半径.$\rho_{0}$为O点与$M_{0}$点的距离,
+而r和$r_{1}$与(2.5.26)式相同.
+
+$3^{\circ}$\ 半平面的Dirichlet-Green 函数即点解问题
+
+\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \
+$\left\{\begin{array}{c}\Delta G=-\delta(x-x_{0},y-y_{0}),\quad\quad
+y>0$或 $y<0
+\\*[3pt]
+G|_{y=0}=0 \ \ \ \ \end{array}\right.$\ \ \ \ \ \ \ \ \ \ \ \ \ \ \
+\ \ \ \ \ \ \ \ \ \ (2.5.30) 的解为
+
+\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \
+\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ $G=\frac{1}{2\pi
+}In\frac{r_{1}}{r}$\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \
+\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (2.5.31) 其中
+
+\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \
+\ \ \ \ \ \ \ \  $r_{1}=\sqrt{(x-x_{1})^{2}+(y-y_{1})^{2}}$\ \ \ \ \
+\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (2.5.32)
+为场点$M(x,y)$ 和源点$M_{0}(x_{0},y_{0})$关于边界
+$y=0$的像点$M_{1}(x_{1},y_{1})$之间的距离, r与(2.5.18)式同.
+
+$4^{\circ}$圆域的Dirichlet-Green 函数即点解问题
+
+\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \
+$\left\{\begin{array}{c}\Delta
+G=-\delta(x-x_{0},y-y_{0},),\quad\quad \rho<a$或 $\rho>a
+\\*[3pt]
+G|_{\rho=a}=0 \ \ \ \ \end{array}\right.$\ \ \ \ \ \ \ \ \ \ \ \ \ \
+\ \ \ \ \ \ \ \ \ \ \ (2.5.33) 的解为
+
+\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \
+\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \
+$G=\frac{1}{2\pi }In\frac{\rho _{0}r_{1}}{a r}$\ \ \ \ \ \ \ \ \ \ \
+\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \
+\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (2.5.34)
+其中,$\rho=a$为坐标原点
+O为中心的圆的半径.$\rho_{0}$为O点与$M_{0}(x_{0},y_{0})$点间的距离,
+而r和$r_{1}$与(2.5.31)式同.
+
+\subsection*{\wuhao\heiti  \center{（三）\ Green函数的一般求法}}
+1.Dirichlet积分公式
+
+(1)三维Poison方程的Dirichlet问题
+
+\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \
+$\left\{\begin{array}{c}\Delta u=-h(M),\quad\quad M=M(x,y,z)\in \tau
+\\*[3pt]
+u|_{\sigma}=f(M) \ \ \ \ \end{array}\right.$\ \ \ \ \ \ \ \ \ \ \ \
+\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (2.5.35)
+的解可由三维Dirichlet积分公式
+
+$$u(M)=\iiint_{\tau}G(M,M_{0})h(M_{0})d\tau_{0}\hspace*{75pt}$$
+\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \
+\ \ \ $-\iint_{\sigma}f(M_{0})\frac{\partial}{\partial
+n_{0}}G(M,M_{0})d\sigma_{0}$\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \
+\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (2.5.36) 给出.
+其中$G(M,M_{0})$为三维Poison方程的Dirichlet-Green函数,即,(2.5.19)式的解.
+
+由(2.5.36)式可求得球内(外)的Poison积分公式,即点解问题
+
+\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \
+$\left\{\begin{array}{c}\Delta u=0,\quad\quad \rho<a$(或$\rho>a)
+\\*[3pt]
+u|_{\rho=a}=f(M) \ \ \ \ \end{array}\right.$\ \ \ \ \ \ \ \ \ \ \ \
+\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \  (2.5.37) 的解为
+
+\ \ \ \
+$u=(\rho,\theta,\varphi)=\frac{a}{4\pi}\int^{2\pi}_{0}\int^{\pi}_{0}f(\theta_{0},\varphi_{0})\frac{\pm(a^{2}-\rho^{2})}{(a^{2}+\rho^{2}-2a\rho
+cos\nu)^{\frac{3}{2}}}sin\theta_{0}d\theta_{0}d\varphi_{0}$\ \ \ \ \
+\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (2.5.38) 其中
+
+\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \
+\ \ \ \ \ \ \ \ \ $cos\nu=cos\theta_{0}+sin\theta
+cos(\varphi-\varphi_{0})$\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \
+\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \
+\ \ \ \ \ (2.5.39)
+
+(2)二维Poison方程的Dirichlet问题
+
+\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \
+$\left\{\begin{array}{c}\Delta u=-h(M),\quad\quad M=M(x,y)\in \sigma
+\\*[3pt]
+u|_{\iota}=f(M) \ \ \ \ \end{array}\right.$\ \ \ \ \ \ \ \ \ \ \ \ \
+\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (2.5.40)
+的解可由二维Dirichlet积分公式
+
+$$u(M)=\iint_{\sigma}G(M,M_{0})h(M_{0})d\sigma_{0}\hspace*{75pt}$$
+\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \
+\ \ \ $-\int_{\iota}f(M_{0})\frac{\partial}{\partial
+n_{0}}G(M,M_{0})d\iota_{0}$\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \
+\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (2.5.41) 给出.
+其中$G(M,M_{0})$为二维Dirichlet-Green函数,即(2.5.22)式的解.
+
+由(2.5.41)式可求得圆内(外)的Poison积分公式，即定解问题
+
+\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \
+$\left\{\begin{array}{c}\Delta u=0,\quad\quad \rho<a$(或$\rho>a)
+\\*[3pt]
+u|_{\rho=a}=f(M) \ \ \ \ \end{array}\right.$\ \ \ \ \ \ \ \ \ \ \ \
+\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \  (2.5.42) 的解为
+
+\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \
+$u=(\rho,\varphi)=\frac{1}{2\pi}\int^{2\pi}_{0}f(\varphi_{0})\frac{\pm(a^{2}-\rho^{2})}{a^{2}+\rho^{2}-2a\rho
+cos(\varphi-\varphi_{0})}d\varphi_{0}$\ \ \ \ \ \ \ \ \ \ \ \ \ \ \
+\ \ \ \ \ (2.5.43)
+
+2.含时定解问题的积分公式
+
+(1)无界区域的扩散问题
+
+\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \
+$\left\{\begin{array}{c}u_{t}-a^{2}u_{xx}=f(x,t),\quad\quad
+-\infty<x<\infty,t>0
+\\*[3pt]
+u|_{t=0}=0 \ \ \ \ \end{array}\right.$\ \ \ \ \ \ \ \ \ \ \ \ \ \ \
+\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \  (2.5.44) 的解, 可由积分公式
+
+\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \
+$u(x,t)=\int^{t}_{0}\int^{\infty}_{-\infty}G(x,t|x_{0},t_{0})f(x_{0},t_{0})dx_{0}dt_{0}$\
+\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (2.5.45)
+给出,其中,$G(x,t|x_{0},t_{0})$
+为无界区域的扩散问题(2.5.44)的Green函数(或基本解).即定解问题
+
+\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \
+ $\left\{\begin{array}{c}G_{t}-a^{2}G_{xx}=\delta(x-x_{0},t-t_{0})
+\\*[3pt]
+G|_{t=0}=0 \ \ \ \ \end{array}\right.$\ \ \ \ \ \ \ \ \ \ \ \ \ \ \
+\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \  (2.5.46) 的解.
+
+由冲量定理和Fourier变换法可求得
+$$G(x,t|x_{0},t_{0})=\frac{1}{2a\sqrt{\pi(t-t_{0})}}e^{-\frac{(x-x_{0})^{2}}{4a^{2}(t-t_{0})}}$$
+\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \
+\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ $t-t_{0}\geq0$\ \ \
+\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \
+\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (2.5.47)
+
+(2)有界区域的扩散问题
+
+\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \
+$\left\{\begin{array}{c}u_{t}-a^{2}u_{xx}=f(x,t),0<x<l,t>0
+\\*[3pt]
+u|_{x=0}=u|_{x=l}=0\ \ \ \ \ \ \ \ \ \ \
+\\*[3pt]
+u|_{t=0}=0 \ \ \ \ \ \ \ \ \ \ \ \ \end{array}\right.$\ \ \ \ \ \ \
+\ \ \ \ \ \  \ \ \ \ \ \ \  \ \ \ \ \ \ \ \ \ \ \ \ (2.5.48)
+
+的解可得积分公式
+
+\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \
+$u(x,t)=\int^{t}_{0}\int^{t}_{0}G(x,t|x_{0},t_{0})f(x_{0},t_{0})dx_{0}dt_{0}$\
+\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \
+(2.5.49)
+给出.其中$G(x,t|x_{0},t_{0})$为有界区域的扩散问题（2.5.48）的Green函数.即定解问题
+
+\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \
+$\left\{\begin{array}{c}G_{t}-a^{2}G_{xx}=\delta(x-x_{0})\delta(t-t_{0})
+\\*[3pt]
+G\ |_{x=0}=G\ |_{x=l}=0\ \ \ \ \ \ \ \ \ \
+\\*[3pt]
+G\ |_{t=0}=0 \ \ \ \ \ \ \ \ \ \ \ \ \end{array}\right.$\ \ \ \ \ \
+\ \ \ \ \ \ \  \ \ \ \ \ \ \  \ \ \ \ \ \ \ \ \ \ \ \  (2.5.50)
+
+的解.由冲量定理和分离变量法可求得
+$$G(x,t|x_{0},t_{0})=\frac{2}{l}\sum ^{\infty}_{n=1}sin\frac{n\pi}{l}x_{0}sin\frac{\pi n}{l}xe^{-(\frac{n\pi a}{l})^{2}(t-t_{0})}$$
+\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \
+\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ $t\geq t_{0}$\ \ \ \
+\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \
+\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (2.5.51)
+
+(3)无界区域的波动问题
+
+\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \
+$\left\{\begin{array}{c}u_{t}-a^{2}u_{xx}=f(x,t),\quad\quad
+-\infty<x<\infty,t>0
+\\*[3pt]
+u|_{t=0}=0,\ \ \ \ u_{t}|_{t=0}=0\ \ \ \ \end{array}\right.$\ \ \ \
+\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (2.5.52)
+的解 可由积分公式
+
+\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \
+$u(x,t)=\int^{t}_{0}\int^{\infty}_{-\infty}G(x,t|x_{0},t_{0})f(x_{0},t_{0})dx_{0}dt_{0}$\
+\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (2.5.53)
+给出.其中,$G(x,t|x_{0},t_{0})$
+为无界区域的波动问题(2.5.52)的Green函数(或基本解).即定解问题
+
+\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \
+ $\left\{\begin{array}{c}G_{tt}-a^{2}G_{xx}=\delta(x-x_{0})\delta(t-t_{0})
+\\*[3pt]
+G|_{t=0}=0 ,\ \ \ G_{t}|_{t=0}=0\ \ \ \ \end{array}\right.$\ \ \ \ \
+\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \  (2.5.54)
+的解由冲量定理和$d^{\prime}$Alembert公式可求得
+
+\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \
+$G(x,t|x_{0},t_{0})=\frac{1}{2a}\int^{x+a(t-t_{0})}_{x-a(t-t_{0)}}\delta(a-x_{0})d\alpha$
+\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (2.5.55)
+
+(4)有界区域的波动问题
+$\left\{\begin{array}{c}u_{tt}-a^{2}u_{xx}=f(x,t),0<x<l,t>0
+\\*[3pt]
+u(0,t)=u(l,t)=0\ \ \ \ \ \ \ \ \ \ \
+\\*[3pt]
+u|_{t=0}=0,u_{t}|_{t=0}=0 \ \ \ \ \ \ \ \ \ \ \ \
+\end{array}\right.$\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \
+\
+ (2.5.56) 的解可由积分公式
+
+\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \
+$u(x,t)=\int^{t}_{0}\int^{t}_{0}G(x,t|x_{0},t_{0})f(x_{0},t_{0})dx_{0}dt_{0}$\
+\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \
+(2.5.57)
+给出.其中$G(x,t|x_{0},t_{0})$为有界区域的波动问题（2.5.56）的Green函数.即定解问题
+
+\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \
+$\left\{\begin{array}{c}G_{tt}-a^{2}G_{xx}=\delta(x-x_{0})\delta(t-t_{0})
+\\*[3pt]
+G\ |_{x=0}=G\ |_{x=l}=0\ \ \ \ \ \ \ \ \ \
+\\*[3pt]
+G\ |_{t=0}=0,G_{t}\ |_{t=0}=0   \ \ \ \ \ \ \
+\end{array}\right.$\ \ \ \ \ \ \ \ \ \ \ \ \  \ \ \ \ \ \ \  \ \ \ \
+\ \ \ \ \ \ \ \   (2.5.58)
+
+的解.由冲量定理和分离变量法可求得
+
+\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \
+$G(x,t|x_{0},t_{0})=\frac{2}{\pi a}\sum
+^{\infty}_{n=1}\frac{1}{n}sin\frac{n\pi}{l}x_{0}sin\frac{\pi
+n}{l}xe^{-(\frac{n\pi a}{l})^{2}(t-t_{0})}$ \ \ \ \ \ \ \ \ \ \ \ \
+\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (2.5.59)
+
+\subsection*{\wuhao\heiti  \center{（四）\ 几个有用的公式}}
+设$u(x,y,z)$和$v(x,y,z)$
+在区域$\tau$直到边界$\sigma$上具有连续一阶导数,
+而在$\tau$中具有连续的二阶导数,则有
+
+1.Green第一公式
+
+\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \
+ $\left\{\begin{array}{c}\iint_{\sigma}u\nabla
+ v\cdot d\sigma=\iiint_{\tau}u\Delta
+ vd\tau+\iiint_{\tau}\nabla u\cdot\nabla vd\tau
+\\*[3pt]
+\iint_{\sigma}v\nabla
+ u\cdot d\sigma=\iiint_{\tau}v\Delta
+ ud\tau+\iiint_{\tau}\nabla u\cdot\nabla vd\tau\ \ \ \ \end{array}\right.$\ \ \ \ \ \ \ \ \ \ \  \ \ \ \ \ \
+\ \ \ \ \   (2.5.60)
+
+2.Green第二公式
+
+\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \  \ \ \ \ \ \ \ \ \
+$\iint_{\sigma}(u\frac{\partial v}{\partial n}-v\frac{\partial
+u}{\partial n})d\sigma\equiv\iiint_{\tau}(u\Delta v-v\Delta u)d\tau$
+\ \ \ \ \ \ \ \ \  \ \ \ \ \ \ \ \ \ \ \ \ \ (2.5.61)
+
+设有$\Delta u(x,y,z)=0,\Delta
+G=-\delta(x-x_{0},y-y_{0},z-z_{0})(M\in\tau)$则有
+
+3.基本积分公式
+$$u(M)=\iiint_{\tau}G(M,M_{0})h(M_{0})d\tau_{0}+\iint_{\sigma}G(M,M_{0})\frac{\partial u}{\partial n_{0}}d\sigma_{0}\hspace*{75pt}$$
+\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \
+\ \ \ $-\iint_{\sigma}u(M_{0})\frac{\partial}{\partial
+n_{0}}G(M,M_{0})d\sigma_{0}$\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \
+\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \
+(2.5.62) 其中
+
+\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \
+$G(M,M_{0})=G(M_{0},M)$\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \
+\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \
+(2.5.63)
+\begin{center}
+\section*{\sihao\heiti  三、复习思考题}
+\end{center}
+1. 何谓$\delta$函数? 在物理上它具有怎样的意义? 它具有哪些主要性质?
+
+2.何谓Green函数?具体说明Dirichlet-Green函数具有怎样的物理意义?
+
+3.何谓Green函数法?它适于求解哪些定解问题?其求解步骤大致可分为哪几部?
+试以Poison方程的Dirichlet问题(2.5.35)式为例进行说明.
+
+4.
+由于Dirichlet积分公式(2.5.36)式中的$G(M,M_{0})$为满足(2.5.19)式的Dirichlet-Green函数,
+故由Dirichlet-Green函数的物理意义可推知Dirichlet积分公式只能用于求解电位问题.你认为这种看法正确吗?为什么.
+
+5. 何谓电像法?
+试举一具体实例来说明用电像法球Dirichlet-Green函数的基本思想和步骤.
+
+6. 球域内和球域外的Dirichlet-Green函数其形式是否一样?
+为什么?上半空间和下半空间的呢?上半空间和左半空间呢?
+
+7.
+在教材中曾由三维空间的Green第二公式即本书的(2.5.60)式出发导出了三维的Dirichlet积分公式即本书的(2.6.36)式,
+试利用二维空间的Green第二公式$$\int_{l}(u\frac{\partial v}{\partial
+n}-v\frac{\partial u}{\partial n})dl=\iint_{\sigma}(u\Delta
+v-v\Delta
+u)d\sigma$$导出二维空间的Dirichlet积分公式即本书的(2.5.41)式.
+
+8.
+在教材中由电像法求得了球域的Dirichlet-Green函数即本书的(2.5.29)式,
+试用电像法求出圆域的Dirichlet-Green函数即本书的(2.5.34)式.
+
+9.
+在教材中由三维的Dirichlet积分公式出发退得了球内(外)的Poison积分公式即本书的(2.5.38)式,
+你能否由二维的Dirichlet积分公式即本书的(2.5.41)式出发退得圆内(外)的Poison积分公式即本书的(2.5.43)式.
+$$$$
+$$$$
+$$$$
+$$$$
+$$$$
+\begin{center}
+\title{\erhao\heiti  \textbf{第六章\ \ 变分法}}
+\date{} \maketitle
+\renewcommand\baselinestretch{1.2}
+\end{center}
+\begin{center}
+\section*{\sihao\heiti  一、基本要求}
+\end{center}
+1. 掌握泛函及变分的概念.
+
+2.掌握泛函取得极值的必要条件.
+
+3. 掌握求泛函极值的两种方法.
+
+4. 会用变分法求数理方程的边值问题的近似解.
+\section*{\sihao\heiti \center{二、内容提要}}
+\subsection*{\wuhao\heiti  （一） 泛函和泛函的极值}
+1.泛函
+
+一个变数J,其值取决于函数$y(x)$,就称之为$y(x)$的泛函,通常记为$$J[y(x)]=\int^{b}_{a}F(x,y,y^{\prime})dx$$其中,
+$F(x,y,y^{\prime})$称为泛函$J[y(x)]$的核.
+
+2. 变分
+
+(1)若函数$y(x)$有微小的变形$t\eta(x)$(t为小参数则记
+$$\delta(y)=t\eta(x)$$称为函数$y(x)$的变分.变分和微分可交换次序.
+
+(2)若函数$y(x)$有变分$\delta y$,则称J的改变
+$$\Delta J[y(x)+\delta y]-J[y(x)]\hspace*{75pt}$$
+\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \
+$=\int^{b}_{a}[\frac{\partial F}{\partial y}\delta y+\frac{\partial
+F}{\partial y^{\prime}}\delta y^{\prime}+t$ 的高阶小量]$dx$
+
+的线性主部(即略去了$t$的高阶小量的部分)为泛函$J[y(x)]$的变分,记作$$\delta
+J=\int^{b}_{a}(\frac{\partial F}{\partial y}\delta y+\frac{\partial
+F}{\partial y^{\prime}}\delta y^{\prime})dx$$
+
+3.泛函的极值与变分问题
+
+泛函的极值问题称为变分问题.研究变分问题的方法可归结为两类,一类为间接法,即把变分问题转化为解微分方程(Euler方程);
+另一类为直接法,即把变分问题转化为直接求普通的多元函数的极值问题,如Ritz方法就是-直接法.
+
+(1)间接法与Euler方程\ \ \ \ \ 泛函J有极值的必要条件为
+$$\delta J=0$$
+由此可推出Euler方程, 解Euler方程即求得J的极值.
+
+$1^{\circ}$ $y(x)$的泛函的变分问题 $$\delta J=\delta
+\int^{b}_{a}F(x,y,y^{\prime})=0$$的Euler方程是
+$$\frac{\partial F}{\partial y}-\frac {d}{dx}\frac {\partial F}{\partial y^{\prime}}=0$$
+当F不显含$x$时,(2.6.6)式化为$$y^{\prime}\frac{\partial F}{\partial
+y^{\prime}}-F=C$$其中C为常数.
+
+$2^{\circ}$n个函数$y_{1}(x)$,$y_{2}(x)$,\ldots$y_{n}(x)$的泛函的变分问题$$\delta
+J=\delta \int
+^{b}_{a}F(x,y_{1},y_{2},\ldots,y_{n};y_{1}^{\prime},y_{2}^{\prime},\ldots,y_{n}^{\prime})dx=0$$的Euler方程是
+$$\frac{\partial F}{\partial y_{i}}-\frac {d}{dx}\frac {\partial F}{\partial
+y_{i}^{\prime}}=0,i=1,2,\ldots,n$$
+
+$3^{\circ}$
+$y_{i}(x)$及其高阶导数($i=1,2,\ldots,n$)的泛函的变分问题$$\delta
+J=\delta \int
+^{b}_{a}F(x,y_{1},y_{2},\ldots,y_{n};y_{1}^{\prime},y_{2}^{\prime},\ldots,y_{n}^{\prime};y_{1}^{(m)},y_{2}^{(m)},\ldots,y_{n}^{(m)})dx=0$$的Euler方程是
+$$\frac{\partial F}{\partial y_{i}}-\frac {d}{dx}\frac {\partial F}{\partial
+y_{i}^{\prime}}+\frac {d^{2}}{dx^{2}}\frac {\partial F}{\partial
+y_{i}^{\prime \prime}}+\ldots +
+(-1)^{m}\frac{d^{m}}{dx^{m}}\frac{\partial F}{\partial
+y^{(m)}_{i}}$$
+$$=0,i=1,2,\ldots,n$$
+$4^{\circ}$多元函数如$u(x,y,z)$的泛函的变分问题$$\delta J=\delta
+\iiint_{v}F(x,y,;u;u_{x},u_{y},u_{z})dxdydz=0$$的Euler方程为$$\frac{\partial
+F}{\partial u}-\frac{\partial}{\partial x}\frac{\partial F}{\partial
+u_{x}}-\frac{\partial}{\partial y}\frac{\partial F}{\partial
+u_{y}}-\frac{\partial}{\partial z}\frac{\partial F}{\partial
+u_{z}}=0$$
+
+$5^{\circ}$
+$J[y(x)]=\int^{b}_{a}F(x,y,y^{\prime})dx$带有附加条件$$\int^{b}_{a}G(x,y,y^{\prime})dx=l$$
+ 变分问题$$\delta\int^{b}_{a}[F(x,y,y^{\prime})+\lambda
+ G(x,y,y^{\prime})]dx=0$$的Euler方程是$$\frac{\partial F}{\partial y}+\lambda\frac{\partial G}
+ {\partial y}-\frac{d}{dx}(\frac{\partial F}{\partial y^{\prime}}+\lambda\frac{\partial G}{\partial y^{\prime}})=0$$
+其中$\lambda$为参数.
+
+(2)直接法与Ritz方法\ \ \ \ Ritz方法的基本要点是, 不把泛函$J[y(x)]$
+放在它的全部定义域内来考虑,
+而把它放在其定义域的某一部分来考虑.具体做法是
+
+$1^{\circ}$ 取某种完备函数系$\varphi_{1}(x),\varphi_{2}(x)\cdots$
+
+$2^{\circ}$令$$y_{n}(x)=f(\varphi_{1},\varphi_{2},\cdots,\varphi_{n},C_{1},C_{2},\cdots,C_{n})$$其中,
+$C_{i}(i=1,2,\cdots,n)$为待定系数,$f$和$\varphi_{i}$的形式可根据边界条件等适当选择.常选多项式或三角函数系.则$$J[y(x)]\thickapprox
+J[y_{n}(x)]=\phi(C_{1},C_{2},\cdots,C_{n})$$
+
+$3^{\circ}$令$\frac{\partial\phi}{\partial C_{i}}=0$
+由此可求得$C_{i}$,从而确定近似解$y_{n}(x)$:而$$y(x)=\lim_{n\rightarrow
+\infty}y_{n}(x)$$
+\subsection*{\wuhao\heiti  （二）\ 求解数理方程的变分法}
+1.变分法解数理方程的原理是
+
+(1)把一个微分方程的本征值问题或定解问题和一个变分问题(即泛函的极值问题)联系起来,使原来需求解的方程是某一泛函的Euler方程.
+
+(2)用直接法如,Ritz方法求出该泛函的极值函数,此即原定解问题或本征值问题的解.
+
+2.\ \ 变分问题和本征值问题的关系
+
+(1)Helmholtz方程的泛函
+
+$1^{\circ}$Helmholtz方程的本征值问题
+$$\left\{\begin{array}{c}\Delta u+\lambda u=0
+\\*[3pt]
+u|\sigma=0 \ \ \ \end{array}\right.$$
+和$$\left\{\begin{array}{c}\Delta u+\lambda u=0
+\\*[3pt]
+\frac{\partial u}{\partial n}|\sigma=0\ \ \ \
+\end{array}\right.$$的泛函均为$$J[u]=\iiint_{\tau}[(\nabla u)^{2}-\lambda
+u^{2}]d\tau$$该泛函亦可写为如下的满足归一化条件的泛函$J_{1}[u]$
+$$\left\{\begin{array}{c}J_{1}[u]=\iiint_{\tau}(\nabla u)^{2}d\tau
+\\*[3pt]
+\iiint _{\tau}u^{2}d \tau =1 \ \ \ \ \ \ \ \
+\end{array}\right.$$值得注意的是,尽管本征值问题(2.6.21)和(2.6.22)的泛函相同,但由于它们的边界条件不同,故极值问题并不相同.
+
+$2^{\circ}$Helmholtz方程的本征值问题$$\left\{\begin{array}{c}\Delta
+u+\lambda u=0
+\\*[3pt]
+[\frac{\partial u}{\partial n}+hu]_{\sigma}=0
+\end{array}\right.$$的泛函为$$J[u]=\iiint_{\tau}[(\nabla u)^{2}-\lambda
+u^{2}]d\tau+h\iint_{\sigma}u^{2}d\sigma$$该泛函亦可写为如下的满足归一化条件的泛函$J_{1}[u]$
+$$\left\{\begin{array}{c}J_{1}[u]=\iiint_{\tau}(\nabla u)^{2}d\tau+h\iint_{\sigma}u^{2}d\sigma
+\\*[3pt]
+\iiint _{\tau}u^{2}d \tau =1 \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \  \ \
+\ \ \ \ \ \ \
+\end{array}\right.$$
+
+(2)Sturm-Lioubille型方程的泛函
+
+Sturm-Lioubille型方程的本征值问题$$\left\{\begin{array}{c}\frac{d}{dx}[k(x)\frac{dy}{dx}]-q(x)y(x)+\lambda\rho(x)y(x)=0(a<x<b)
+\\*[3pt]
+y(a)=y(b)=0$或$y^{\prime}(a)=y^{\prime}(b)=0\ \ \ \ \ \ \ \
+\end{array}\right.$$的泛函为$$\left\{\begin{array}{c}J[y(x)]=\int^{b}_{a}[k(x)y^{\prime
+2}+qy^{2}]dx
+\\*[3pt]
+\int^{b}_{a}\rho(x)y^{2}dx=1\ \ \ \ \ \ \ \ \  \ \ \ \ \ \
+\end{array}\right.$$
+
+(3)泛函的极值与本征值的关系
+
+以Helmholtz方程的第一类边界条件的本征值问题(2.6.21)式为例
+
+$1^{\circ}$在第一类齐次边界条件$$u|\sigma=0$$
+的情况下,求得的(2.6.21)式满足(2.6.24)式的泛函$J_{1}[u]$的极小值勤$\lambda_{0}$,就是本征值问题(2.6.21)的最小本征值,而相应的极值函数就是使
+$$J_{1}[u_{0}]=\lambda_{0}$$
+的$u_{0}$,就是本征值问题的最小本征值$\lambda_{0}$相应的本征函数.
+
+$2^{\circ}$设满足(2.6.24)式的泛函电$J_{1}[u]$还有极值函数$u_{i}$和极值$\lambda_{i}(i=1,2,\cdots)$,它们除满足(2.6.24)式外,$u_{i}$还满足正交条件,即
+$$\left\{\begin{array}{c}J_{1}[u_{u_{i}}]=\iiint_{\tau}(\nabla
+U_{i})^{2}d\tau=\lambda_{i}\ \ \ \ \ \
+\\*[3pt]
+\iiint_{\tau}u_{i}u_{k}d\tau=\delta_{ki}(k=0,1,2,\cdots,i-1)
+\end{array}\right.$$且$$\lambda_{i}\geq\lambda_{i-1}$$则本征值问题(2.6.21)有一系列的本征值$$\lambda_{0}\leq\lambda_{1}\leq\lambda_{2}\leq\cdots\leq\lambda_{i}\leq\cdots$$
+和相应的本征函数$$u_{0}\ \ \ \ u_{1}\ \ \ \ u_{2}\cdots\ \ \ \
+u_{i}\cdots$$
+
+$3^{\circ}$其他的本征问题及与之相应的泛函的极值问题之间也有类似的关系.
+
+由此可见,本征值问题,可转化为求本征值问题的泛函在相应的边界条件下的极值和极值函数的问题.
+
+3.变分问题和数理方程边界问题的关系
+
+由于变分问题既可通过间接方法——解Euler方程(常微分和偏微分方程)来求,可通过直接求法--Ritz方法来求,
+故完全可将数理方程边界问题中的方程视为某变分问题的Euler方程,而将该边值问题转化为变分问题来求.称之为变分法.
+
+(1)变分法解数理方程的步骤是
+
+$1^{\circ}$构造所需求解的边值问题的泛函.通常是将原方程用某量作用后,在整个求解区间中积分,代之以相应的边界条件,使
+构造的泛函的Euler方程就是边值问题的泛定方程.
+
+$2^{\circ}$用Ritz方法求所构造的泛函的极值函数,此即原数理方程边值问题的近似解.
+
+(2)Poisson方程边值问题的泛函
+
+$1^{\circ}$Poisson方程的Dirichlet问题$$\left\{\begin{array}{c}\triangle
+u=-f(M),M\in\tau
+\\*[3pt]
+u\ |_\sigma=g(M),M\in\sigma
+\end{array}\right.$$的泛函为$$J[u]=\iiint_\tau[(\nabla u)^{2}-2fu]d\tau$$
+
+$2^{\circ}$Poisson方程的Neumann问题$$\left\{\begin{array}{c}\triangle
+u=-f(M),M\in\tau
+\\*[3pt]
+\frac{\partial u}{\partial n}|_\sigma=g(M),M\in\sigma
+\end{array}\right.$$的泛函为$$J[u]=\iiint_{\tau}[(\nabla u)^{2}-2fu]d\tau-2\iint_\sigma gud\sigma$$
+
+$2^{\circ}$Poisson方程的第三边值问题$$\left\{\begin{array}{c}\triangle
+u=-f(M),M\in\tau
+\\*[3pt]
+[\frac{\partial u}{\partial n}+hu]_\sigma=g(M),M\in\sigma
+\end{array}\right.$$的泛函为$$J[u]=-\iiint_{\tau}[(\nabla u)^{2}-2fu]d\tau-2\iint_\sigma gud\sigma+\iint_\sigma hu^{2}d\sigma$$
+
+由此可见,边值问题(2.6.31)、(2.6.33)和(2.6.35)的解,可分别通过在其相应的边界条件下,求其相应的泛函(2.6.32)、(2.6.34)和(2.6.36)的极值我饿函数得到.
+用变分法求得.
+
+顺便指出,二维Poisson方程的Dirichlet问题、Neumann问题和第三边值问题的泛函数,和三维Poisson方程的Dirichlet问题、Neumann问题和第三边值问题的泛函
+(2.6.32)、(2.6.34)和(2.6.36)具备完全相同的形式,只要将以上三公式中的体积分$\iiint_\sigma
+d\sigma$换成面积分$\iint_\sigma d\sigma$,面积分$\iint_{\sigma}
+d\sigma$换成线积分$\int_{l}dl$即可。这是因为所讨论的问题是在平面域内，可记为$\sigma(x,y)$,其边界是曲线，可记为$l$.
+
+\section*{\sihao\heiti \center{三、复习思考题}}
+
+1.何谓泛函?它与普通函数有何差异?积分$\int^{b}_{a}F[\varphi(x)]dx$是泛函吗?
+
+2.何谓函数的变分$\delta y?\delta y=\delta y$吗?何谓泛函的变分?
+$\delta J[y(x)]=\triangle J[y(x)]$吗?
+
+3.泛函取极值的必要条件是什么?
+
+4.何谓变分问题?可用哪些方法来求变分问题?这些方法的各自要领是什么?
+
+5.泛函$J[y(x)]=\int^{2}_{1}(y^{\prime2}-2xy)dx$的Euler方程是什么?满足边界条件$y(1)=0,y(2)=-1$的极值曲线是什么?
+
+6.何谓变分法?为什么能用变分法莱求解数理方程的定解问题?其求解步骤是怎么样的?用变分法求得的数理方程定解问题的解是近视解还是准确解?
+
+7.泛函的极值和极值函数,与本征值问题的本征值和本征值函数之间的关系式怎样的?
+
+\section*{\sihao\heiti \center{四、例题分析}}
+\subsection*{\wuhao\heiti  （一） 变分的概念和性质}
+
+{\heiti例1}\ \ 试证$$\left\{\begin{array}{c}\frac{d}{dx}\delta
+y^\prime(x)\ \ \ \ \ \ \ \ \ \ \ \ \ \
+\\*[3pt]
+\int^{b}_{a}\delta ydx=\delta \int^{b}_{a}y(x)dx
+\end{array}\right.$$
+
+{\heiti 分析}\ \ \ \
+此题即要证变分和求导(或求积)的运算可颠倒顺序,这一性质在研究处理一些问题时很有用.
+
+{\heiti 证明}\ \ \ \ 由定义,当
+
+ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \  \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \
+ $y(x)\rightarrow y(x)+t\eta(x)(t $
+是小参量)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \
+\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \  \ \ \ \ \ \  \
+\ \ \ \ \ \ \ \ \ \ding {172} 时,则记
+
+$\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \
+\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \delta y=t\eta (x)$\ \ \ \ \ \ \
+\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \
+\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ding {173}
+称之为$y$变分.即$y$的变分是$y$的一个微小改变量。显然,当$y$有变分时
+
+\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ $y^{\prime}(x)=\lim_{\Delta
+x\rightarrow 0}\frac{\Delta y}{\Delta x}\rightarrow\lim_{\Delta
+x\rightarrow 0}\frac{\Delta(y+t\eta)}{\Delta
+x}=y^{\prime}(x)+t\eta^{\prime}(x)$\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \
+\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ding {174}
+若记$$F(x)\rightarrow F(x)+t\alpha(x)$$ 故由定义式\ding {172}-\ding
+{173}式有$$\delta F(x)=t\alpha (x)$$即$$\delta
+y^{\prime}(x)=t\eta^{\prime}(x)=\frac{d}{dx}[t\eta
+(x)]=\frac{d}{dx}\delta y$$
+$$$$ $$$$ $$$$ $$$$ $$$$ $$$$ $$$$ $$$$ $$$$
+\begin{center}
+\title{\erhao\heiti  \textbf{第一章\ \ Legendre多项式,球函数}}
+\date{} \maketitle
+\renewcommand\baselinestretch{1.2}
+\end{center}
+\begin{center}
+\section*{\sihao\heiti  一、基本要求}
+\end{center}
+
+1. 正确地判断二阶微分方程的常点,掌握在其常点领域的级数解法.
+
+2.记住标准的Legenddre方程、缔合Legendre方程的形式,能熟练地写出其有限解.
+
+3.记住Legendre多项式的定义式、微分式及前几个Legendre多项式$P_{0}(x)$,$P_{1}(x)$和$P_{2}(x)$的具体表示.
+
+4.掌握Legendre多项式的各项性质(如递推公式、母函数关系、正交归一性、展开定理等)及其运用.
+
+5.掌握缔合Legendre函数、球函数的定义及它们的正交归一性和展开定理.
+
+6.掌握$\triangle
+u=0$在球坐标系中的分离变量的解、并用之于具体的物理问题.
+\section*{\sihao\heiti \center{二、内容提要}}
+
+在球坐标系中对Laplace方程$\triangle
+u=0$分离变量,所得到的关于变量$\theta$的方程为$$\frac {1}{\sin
+\theta}\frac{d}{d\theta}(\sin \theta \frac
+{d\Theta}{d\theta})+[l(l+1)-\frac{m^{2}}{\sin
+^{2}\theta}]\Theta=0$$称为$l$阶{\heiti $m$次缔合Legendre方程}
+
+令$x=\cos \theta,y(x)=\Theta (\theta)$,则缔合Legendre方程又可表示为
+$$(1-x^{2})y^{\prime\prime}-2xy^{\prime}+[l(l+1)-\frac {m^{2}}{1-x^{2}}]y=0,|x|\leq 1$$
+
+若$u(r,\theta,\varphi)$与$\varphi$无关呈轴对称，即$m=0$则(3.1.3)式变成$$(1-x^{2})y^{\prime\prime}-2xy^{\prime}+l(l+1)y=0,|x|\leq
+1$$称为$l$阶的{\heiti Legendre方程}
+\subsection*{\wuhao\heiti  （一） Legendre方程及Legendre多项式}
+1.Legendre方程的级数解
+
+由常微分方程的级数解法得,Legendre方程(3.1.3)在常数$x=0$点领域的级数解为
+$$y(x)=(C_{0}+\sum^{\infty}_{n=1}C_{2n}x^{2n})+(C_{1}x+\sum
+C_{2n+1}x^(2n+1))=C_{0}y_{0}(x)+C_{1}y_{1}(x)$$其中, $$C_{2n}=\frac
+{(-1)^{n}(l-2n+2)(l-2n+4)\cdots l(l+1)(l+3)\cdots
+(l+2n-1)}{(2n)!}C_{0}$$ $$C_{2n+1}=\frac
+{(-1)^{n}(l-2n+1)(l-2n+3)\cdots (l-1)(l+2)(l+4)\cdots
+(l+2n)}{(2n+1)!}C_{1}$$级数解(3.1.4)~(3.1.6)在$|x|<1$中收敛,在$|x|\geq
+1$中发散.
+
+2.Legendre多项式
+
+在(3.1.4)~(3.1.6)式中,取$l=0,1,2,\cdots$,则$y_{0}(x)$和$y_{1}(x)$中必有一个是$l$次多项式.取此$l$次多项式最高次幂的系数为
+$$C_{l}=\frac
+{(2l)!}{2^{l}(l)!}$$并记之为$P_{l}(x)$,则Legendre方程必有特解$$y(x)=P_{l}(x)=\sum^{[\frac{l}{2}]}_{n=0}\frac
+{(-1)^{n}(2l-2n)!}{2^{l}n!(l-n)!(l-2n)!}x^{l-2n}$$称为$l$阶的Legendre多项式.它满足$P_{L}(1)\equiv
+1$,是Legendre方程的有限解，其中
+
+$\ \ \ \ \ \ \ \
+ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ [\frac{l}{2}]=\left\{\begin{array}{c}\frac{l}{2},l=2n
+\\*[3pt]
+\frac {l-1}{2},l=2n+1
+  \end{array}\right. n=0,1,2,\cdots$
+
+由(3.1.7)式可得$$\left\{\begin{array}{c}P_{0}(x)=1
+\\*[3pt]
+P_{1}(x)=x
+\\*[3pt]
+P_{2}(x)=\frac{1}{2}(3x^{2}-1)
+\\*[3pt]
+P_{3}(x)=\frac{1}{2}(5x^{2}-3x)
+  \end{array}\right. $$
+
+3.Legendre方程的本征值问题
+$$\left\{\begin{array}{c}(1-x^{2})y^{\prime\prime}-2xy^{\prime}+l(l+1)y=0,|x|\leq
+1
+\\*[3pt]
+y\ _{x=\pm 1}=$有限$
+  \end{array}\right. $$的本征值为
+$$l(l+1),l=0,1,2,\cdots$$相应的本征值函数为$$y_{l}(x)=P_{l}(x)$$
+
+4.Legendre多项式还可表示为$\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \
+\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \
+\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ $
+微分式：$P_{l}(x)=\frac
+{1}{2^{l}l!}\frac{d^{l}}{dx^{l}}(x^{2}-1)^(l)$ $\ \ \ \ \ \ \ \ \ \
+\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \
+\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \
+\ \ \ \ \ \ $ 积分式：$P_{l}(x)=\frac{1}{2\pi
+i}\oint_{l^{*}}\frac{(\zeta^{2}-1)}{2^{l}(\zeta-x)^{l+1}}d\zeta$ $\
+\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \
+\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \
+\ \ \ \ \ \ \  $其中$l^{*}$为包围$\zeta=x$的回路.
+
+\subsection*{\wuhao\heiti  （二） Legendre多项式的性质}
+
+Legendre多项式的性质
+
+1.母函数关系式$$\frac{1}{\sqrt{1-2xt+t^{2}}}=\sum^{\infty}_{l=0}P_{l}(x)t^{l},|t|<1$$
+其中$t$为复数.等式左边的函数称为$P_{l}(x)$的母函数
+
+2.递推公式$$\left\{\begin{array}{c}(l+1)P_{l+1}{x}-{2l+1}xP_{l}(x)+lP_{l-1}(x)=0
+\\*[3pt]
+(2l+1)P_{l}{x}=P^{\prime}_{l+1}(x)-P^{\prime}_{l-1}(x)\ \ \ \ \ \ \
+\ \ \ \  \ \
+  \end{array}\right. $$
+
+3.正交归一性$$\int^{1}_{-1}P_{l}{x}P^{k}(x)dx=\frac{2}{2l+1}\delta_{kl},k,l=0,1,2,\cdots$$
+其中$$\delta_{kl}=\left\{\begin{array}{c}0,k\neq l
+\\*[3pt]
+1,k=l
+  \end{array}\right.$$称之为{\heiti
+  Kronecher函数}.$\sqrt{\frac{2}{2l+1}}$称为$P_{l}(x)$的{\heiti
+  模}.通常记 $N^{2}_{t}=\frac{2}{2l+1}$.
+
+4.广义Fourier展开$$f(x)=sum^{\infty}_{t=0}C_{l}P_{l}(x)$$
+$$C_{t}=\frac{2l+1}{2}\int^{1}_{-1}f(x)P_{l}(x)dx$$
+
+\subsection*{\wuhao\heiti  （三）缔合Legendre方程及缔合Legendre函数}
+
+1.缔合Legendre方程(3.1.2)与其有限性自然边界条件所构成的本征值问题$$\left\{\begin{array}{c}(1-x^{2})y^{\prime\prime}-2xy^{\prime}+[l(l+1)-\frac{m^{2}}{1-x^{2}}]y=0,|x|\leq1
+\\*[3pt]
+y\ \ |_{x=\pm1}\rightarrow$有限$\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \
+\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \
+  \end{array}\right.$$的本征值为$$l(l+1),l=0,1,2,\cdots$$相应的本征值函数为$$y_{l}(x)=P^{m}_{l}(x)=(1-x^{2})^{\frac{m}{l}}P^{(m)}_{l}(x),m=0,1,\cdots,l$$
+称为$l$阶$m$次缔合Legendre函数.它是缔合Legendre方程(3.1.2)的有限解.
+
+由(3.1.18)式可得$$\left\{\begin{array}{c}P^{1}_{1}(x)=(1-x^{2})^{\frac{1}{2}}=\sin
+\theta\ \ \ \ \ \ \ \
+\\*[3pt]
+P^{1}_{2}(x)=3(1-x^{2})^{\frac{1}{2}}x=\frac{3}{2}\sin 2\theta\ \ \
+\\*[3pt]
+P^{2}_{2}(x)=3(1-x^{2})=\frac{3}{2}(1-\cos 2\theta)
+  \end{array}\right.$$
+
+2.缔合Legendre函数还可表示为
+
+微分式：$P^{m}_{l}=\frac{(1-x^{2})^{\frac{m}{2}}}{2^{l}l!}\frac{d^{l+m}}{dx^{l+m}}(x^{2}-1)$
+
+微分式：$P^{m}_{l}=\frac{(1-x^{2})^{\frac{m}{2}}}{2^{l}}\frac{1}{2\pi
+i}\frac{(l+m)!}{l!}\oint_{l^{*}}\frac{(\xi^{2}-1)^{l}}{(\xi-x)^{l+m+1}}d\xi\
+\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \
+\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \
+\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \
+\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ $
+且$$P^{-m}_{l}(x)=(-1)^{m}\frac{(l-m)!}{{l+m}!}P^{m}_{l}(x)$$
+
+3.缔合Legendre函数具有如下主要性质:
+
+(1)递推公式$$(l+1-m)P^{m}_{l+1}(x)-(2l+1)xP^{m}_{l-1}(x)=0$$
+
+(2)正交归一性$$\int^{1}_{-1}P^{m}_{l}(x)P^{m}_{k}(x)dx=\frac{(l+m)!}{(l-m)!}\frac{2}{2l+1}\delta_{kl}$$
+
+(3)广义Fourier展开$$f(x)=\sum^{\infty}_{l=0}C^{m}_{l}P^{m}_{l}(x)$$
+$$C^{m}_{l}=\frac{(2l+1)(l-m)!}{2(l+m)!}\int^{1}_{-1}f(x)P^{m}_{l}(x)dx$$
+
+\subsection*{\wuhao\heiti  （四）球函数方程和球函数}
+
+球坐标系中对Laplace方程按变量$u(r,\theta,\varphi)=R(r)Y(\theta,\varphi)$分离变量,所得到的关于$Y(\theta,\varphi)$的方程称为{\heiti
+球函数方程}.
+
+1.球函数方程与其单值、有限性的自然边界条件所构成的本征值问题$$\left\{\begin{array}{c}\frac{1}{\sin
+\theta}\frac{\partial}{\partial \theta}(\sin \theta\frac{\partial
+Y}{\partial \theta})+\frac{1}{\sin^{2}\theta\partial
+\varphi^{2}}+l(l+1)Y=0
+\\*[3pt]
+Y(\theta,\varphi)=Y(\theta,\varphi+2\pi);Y(0,\varphi)=Y(\pi,\varphi)=$有限$
+  \end{array}\right.$$的本征值为$$l(l+1),l=0,1,2,\cdots ;m,m=0,\pm1,\cdots,\pm
+  l$$.相应的本征函数为$$Y^{m}_{l}(\theta,\varphi)=P^{m}_{l}(\cos
+  \theta)\left\{\begin{array}{c}\sin m\varphi
+\\*[3pt]
+\cos m\varphi
+  \end{array}\right\},l=0,1,2,\cdots,m=0,1,2,\cdots,l$$
+
+或$\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \
+\ \ \  Y^{m}_{l}(\theta,\varphi)=P^{m}_{l}(\cos
+  \theta)e^{im\varphi}$ $$l=0,1,2,\cdots,m=0,\pm1,\pm2,\cdots,\pm
+  l$$记$$ Y^{m}_{l}(\theta,\varphi)=\sqrt{\frac{(2l+1)}{4\pi}\frac{(l-m)!}{(l+m)!}}P^{m}_{l}(\cos \theta)e^{im\varphi}$$
+称为{\heiti $l$阶球函数}.它是球函数方程(3.1.27)的有限解
+,亦是本征值问题(3.1.27)~(3.1.28)的本征函数.独立的$l$阶球函数有$2l+1$个.
+
+由(3.1.29)式可得$$\left.
+\begin{array}
+{cccc}
+Y_{0,0}=\frac{1}{\sqrt{4\pi}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \  \\
+Y_{1,0}=\sqrt{\frac{3}{4\pi}}\cos \theta\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \\
+Y_{1,\pm1}=\pm\sqrt{\frac{3}{8\pi}}\sin \theta e^{\pm i\varphi} \ \ \ \ \ \ \\
+Y_{2,0}=\sqrt{\frac{5}{16\pi}}(3\cos^{2} \theta-1)\ \ \ \ \ \ \ \ \\
+Y_{2,\pm1}=\pm\sqrt{\frac{15}{8\pi}}\sin \theta \cos \theta e^{\pm i\varphi} \\
+Y_{2,\pm2}=\sqrt{\frac{15}{32\pi}}\sin^{2} \theta e^{\pm i2\varphi}\
+\ \ \ \ \
+\end{array}
+\right\}
+$$
+
+2.球函数具有如下主要性质:
+
+(1)正交归一性$$\int^{\pi}_{0}\int^{2\pi}_{0}Y_{l,m}(\theta,\varphi)\overline{Y^{\prime}_{l^{\prime},m^{\prime}}}(\theta,\varphi)\sin
+\theta d\varphi
+d\theta=\delta_{mm^{\prime}}\delta_{u^{\prime}}$$其中，$\overline{Y_{l,m}}$是$Y_{l,m}$的共轭复数,且$$overline{Y_{l,m}}=(-1)^{m}Y_{l,-m}$$
+
+2.广义Fourier展开$\ \ \ \
+$设$f(\theta,\varphi)$在$0\leq\theta\leq,0\leq\varphi\leq2\pi$上连续，则$$f(\theta,\varphi)=\sum^{l}_{m=-l}\sum^{\infty}_{l=0}C_{l,m}Y_{l,m}(\theta,\varphi)$$
+其中$$C_{l,m}=\int^{\pi}_{0}\int^{2\pi}_{0}f(\theta,\varphi)\overline{Y}_{l,m}(\theta,\varphi)\sin
+\theta d\varphi d\theta$$
+\section*{\sihao\heiti\center{三、复习思考题}}
+
+1.方程$(1-x^{2})y^{\prime\prime}-2xy^{\prime}+6y$是什么方程.你能写出它在$|x|\leq1$中的一个有限解码?
+
+2.试述Legendre方程本征值问题的提法,其本征值、本征值函数是什么?
+
+3.$P_{0}(x)=?P_{1}(x)=?,P_{2}(x)=?,P_{l}(x)=?$你能证明$P_{l}(-
+x)=(-1)^{l}P_{l}(x)$吗.你能由$P_{1}(x)$和$P_{2}(x)$之值算出$P_{3}(x)$吗?
+
+4.何谓方程的常点?在常点领域方程的级数解具有怎样的形式?你能求出Legendre方程在$x=0$的领域的线性解(3.1.4)--(3.1.6)吗?
+
+5.Legendre多项式的母函数是什么?何谓母函数法?它有哪些用途?
+
+6.Legendre多项式的归一化因子是什么?模是什么?你能得到一正交归一的Legendre多项式吗?
+
+7.积分$\int^{1}_{-1}P_{88}(x)P_{89}(x)dx$和$\int^{1}_{-1}P_{88}(x)dx$之值分别是多少?$\int^{1}_{-1}xP_{88}(x)P_{99}(x)dx$和$\int^{1}_{-1}xP_{88}(x)P_{89}(x)dx$
+
+8.你能将$x^{2}+x$用Legendre多项式表示吗?
+
+9.你能否用关系式$\frac{1}{\sqrt{1-2xt+t^{2}}}=\sum^{\infty}_{l=0}t^{l}$导出递推公式$$(l+1)P_{l+1}(x)-(2l+1)xP_{l}(x)+lP_{l-1}(x)=0$$
+
+10.在球坐标系中,在轴对称的情况下,$\triangle
+u=0$的变量分离形式的解是什么?在球内的解是什么?在球外的解呢?
+
+11.什么是缔合Legendre函数?它是否是多项式?为什么?
+
+12.试述缔合Legendre方程本征值问题的提法.其本征值和本征函数是什么?
+
+13.试述缔合Legendre函数的模和归一化因子是什么?
+
+14.$P^{m}_{l}(x)$是否等同于$P^{(m)}_{l}(x)?P^{m}_{l}(x)$与$P_{l}(x)$有何关系?你能否由$P_{l}(x)$的归一性(3.1.14)式，导出$P^{m}_{l}(x)$的正交归一性(3.1.24)式?
+
+15.何谓球函数方程?它满足下列条件$$\left\{\begin{array}{c}Y(\theta,\varphi)=Y(\theta,\varphi+2\pi)\
+\ \ \ \ \ \ \
+\\*[3pt]
+Y(0,\varphi)=$有限$,Y(\pi,\varphi)=$有限$
+  \end{array}\right.$$的特解是什么?
+
+16.独立的$l$阶球函数共有多少个?
+
+17.你能用两种不同的形式,写出在球函数系中,在非轴对称的情况下$\triangle
+u=0$的解吗?它们对于球内和球外的具体情况,又分别是怎样呢?
+
+18.在本章中,我们涉及到了哪几个特殊函数?你能将它们的表达式和性质归纳小结下吗?
+\section*{\sihao\heiti\center{四、例题分析}}
+\subsection*{\wuhao\heiti  （一）$\ \ \ \  P_{l}(x),P^{m}_{l}$和$Y_{l,m}(\theta,\varphi)$有相关性质的应用}
+
+本章涉及到了(3.1.2)、(3.1.3)和(3.1.27)三个特殊函数微分方程,他们在各自相应的自然边界条件下的特解分别为特殊函数$P_{l}(x),P^{m}_{l}$和$Y_{l,m}(\theta,\varphi)$
+.现将这些特殊函数的性质小结如下(见表3.1.1)以便复习.
+
+现在用以上特殊函数的性质来推出一些新的性质和解答一些题.
+
+{\heiti 例1}$\ \ \ \
+$试用母函数法证明$$P_{l}(x)=P^{\prime}_{l+1}-2xP^{\prime}_{l}(x)+P^{\prime}_{l-1}(x)$$
+
+{\heiti
+证}因为$$\frac{1}{\sqrt{1-2xt+t^{2}}}=\sum^{\infty}{l=0}P_{l}(x)t_{l}$$将上式两边对$x$求导,得
+$$\frac{1}{(1-2xt+t^{2})^{\frac{3}{2}}}=\sum^{\infty}{l=0}P_{l}(x)t_{l}$$
+两边同乘$(1-2xt+t^{2})$并再一次用母函数展开式\ding {193}得
+$$t\sum^{\infty}_{l=0}P_{l}(x)t^{l}=(1-2xt+t^{2})\sum^{\infty}_{l=0}P^{\prime}_{l}(x)t^{l}$$
+比较两上式两边$t^{l+1}$的系数得$$P_{l}(x)=P^{\prime}_{l+1}(x)-2xP^{\prime}_{l}(x)+P^{\prime}_{l-1}(x)$$
+{\heiti 思考}$\ \ \ \
+$用递推公式(3.1.13)中第一式和本例的结论,你能推导递推公式(3.1.13)中的第二式即表3.1.1中的第二个递推公式吗?
+$$$$ $$$$ $$$$ $$$$ $$$$ $$$$ $$$$ $$$$ $$$$ $$$$ $$$$ $$$$ $$$$ $$$$
+$$$$ $$$$ $$$$ $$$$ $$$$ $$$$
+\begin{center}
+\title{\erhao\heiti  \textbf{第二章\ \ Bessel函数,柱函数}}
+\date{} \maketitle
+\renewcommand\baselinestretch{1.2}
+\end{center}
+\begin{center}
+\section*{\sihao\heiti  一、基本要求}
+\end{center}
+
+1. 正确地判断微分方程的正则奇点,掌握在正则奇点领域的级数解法.
+
+2.记住Bessel方程、球Bessel方程的形式,能熟练地写出其有限解.
+
+3.记住Bessel的定义式、积分式.
+
+4.掌握Bessel函数的母函数关系式、主要递推公式、正交性、展开定理及其应用.
+
+5.了解其它几类柱函数的定义、它们与Bessel函数的关系和他们是哪些方程的解.
+
+6.掌握$\triangle
+u=0$在柱坐标系中的分离变量的解、并用之于具体的物理问题.
+\section*{\sihao\heiti \center{二、内容提要}}
+
+在柱坐标中对Helmholtz方程$\triangle u+\lambda
+u=0$或Laplace方程$\triangle
+u=0$分离变量所得到的关于变量$\rho$的方程为
+$$\left.
+\begin{array}
+{cccc} \rho^{2}R^{\prime\prime}(\rho)+\rho
+R^{\prime}(\rho)+[(\lambda-\mu)\rho^{2}-n^{2}]R(\rho)=0 \\
+$或$\rho^{2}R^{\prime\prime}(\rho)+\rho
+R^{\prime}(\rho)+[(-\mu)\rho^{2}-n^{2}]R(\rho)=0
+\end{array}
+\right\}$$其中,$n=0,1,2,\cdots;(\lambda-\mu)$(或$-\mu)\geq0$,若;$(\lambda-\mu)$(或$-\mu)\geq0$,则记
+$k^{2}=(\lambda-\mu)$(或$-\mu)$,此时上述二方程均变为$$\rho^{2}R^{\prime\prime}(\rho)+\rho
+R^{\prime}(\rho)+[k^{2}\rho^{2}-n^{2}]R(\rho)=0$$称为{\heiti
+n阶的Bessel方程}.
+
+令$x=k\rho,y(x)=R(\rho)$,则$n$阶的Bessel方程又可表示为$$x^{2}y^{\prime\prime}(x)+xy^{\prime}(x)+(x^{2}-n^{2})y=0$$
+(3.2.1)和(3.2.2)式是整数阶的Bessel方程,若将之进行推广,即将$n$推广为实数$\nu$,则得到任意阶的Bessel方程$$x^{2}y^{\prime\prime}(x)+xy^{\prime}(x)+(x^{2}-\nu^{2})y=0$$
+\subsection*{\wuhao\heiti  （一）Bessel方程及柱函数}
+
+1.Bessel方程的级数解
+
+由常微分方程的级数解法得，Bessel方程(3.2.3)在正则奇点$x=0$点领域有两个级数解(并不一定县线性无关)
+$$y_{1}(x)=\sum^{\infty}_{n=0}\frac{(-1)^{n}c_{0}\Gamma(\nu+1)}{2^{2n}n!\Gamma(\nu+n+1)}x^{2n+\nu}$$
+$$y_{2}(x)=\sum^{\infty}_{n=0}\frac{(-1)^{n}c_{0}\Gamma(-\nu+1)}{2^{2n}n!\Gamma(-\nu+n+1)}x^{2n-\nu}$$
+该二级数分别在$0\leq x<\infty$和$0<x<\infty$中收敛.
+
+2.柱函数和Bessel方程的通解
+
+(1)第一类柱函数--Bessel函数
+
+分别取(3.2.4)和(3.2.5)式中$c_{0}=\frac{1}{2^{\nu}\Gamma(\nu+1)}$和$c_{0}=\frac{1}{2^{-\nu}\Gamma(-\nu+1)}$,
+并将此时的$y_{1}(x)$和$y_{2}(x)$记为$J_{\nu}(x)$和$J_{-\nu}(x)$,分别称之为$\nu$和$-\nu$阶的{\heiti
+Bessel函数}或{\heiti
+第一类柱函数},则$$J_{\nu}(x)=\sum^{\infty}_{k=0}\frac{(-1)^{k}}{k!\Gamma(\nu+k+1)}(\frac{x}{2})^{2h+\nu}$$
+$$J_{-\nu}(x)=\sum^{\infty}_{k=0}\frac{(-1)^{k}}{k!\Gamma(-\nu+k+1)}(\frac{x}{2})^{2h-\nu}$$它们均为Bessel方程(3.2.3)的特解.
+
+当$\nu\neq
+n(n=0,\pm1,\pm2,\cdots)$时,Bessel方程(3.2.3)的通解为$$y_{c}=C_{\nu}J_{\nu}(x)+D_{\nu}J_{-\nu}(x)$$
+
+当$\nu=n$时,$$J_{-n}(x)=(-1)^{n}J_{n}(x)$$
+
+(2)第二类柱函数--Neuman函数
+
+定义$$N_{\nu}(x)=\frac{\cos \nu\pi J_{\nu}(x)-J_{-\nu}(x)}{\sin \nu
+\pi}$$为{\heiti
+第二类柱函数},它是Bessel方程(3.2.3)的另一特解.又叫{\heiti
+Neuman函数}.而$\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \
+ \ \ \ \ \ \ $ $N_{n}(x)=\lim_{\nu\rightarrow n}\frac{\cos\nu\pi
+J_{\nu}(x)-J_{-\nu}(x)}{\sin\nu\pi}$
+
+$\ \ \
+=\frac{2}{\pi}J_{n}(x)\ln\frac{x}{2}-\frac{1}{\pi}\sum^{n-1}_{k=0}$
+
+$\ \ \
+-\frac{1}{\pi}\sum^{\infty}_{k=0}\frac{-1}{k!(n+k)!}[\psi(k+1)+\psi(k+n+1)](\frac{x}{2})^{2k+n}$
+
+无论$\nu=n$与否,Bessel方程(3.2.3)的通解均可表示为$$y_{c}=A_{\nu}J_{\nu}(x)+B_{\nu}N_{\nu}(x)$$
+
+(3)第三类柱函数--Hankel函数
+
+定义$$\left\{\begin{array}{c}H^{(1)}_{\nu}(x)=J_{\nu}(x)+iN_{\nu}(x)
+\\*[3pt]
+H^{(2)}_{\nu}(x)=J_{\nu}(x)-iN_{\nu}(x)
+  \end{array}\right.$$为{\heiti
+  第三类柱函数},又叫Hankel函数.它是Bessel函数(3.2.3)的又一形式的特解.
+
+无论$\nu=n(n=0,\pm1,\pm2,\cdots)$与否,Bessel方程(3.2.3)的通解均可由$J_{\nu}(x),J_{\nu}(x),H^{(1)}_{\nu}(x)$和$H^{(2)}_{\nu}(x)$之中的任意两个线性组合而成.
+
+3.Bessel方程的本征值问题
+
+(1)本征值问题$$\left\{\begin{array}{c}\rho^{2}R^{\prime\prime}(\rho)+\rho
+R^{\prime}(\rho)+(k^{2}\rho^{2}-n^{2})R=0
+\\*[3pt]
+R(a)=0
+  \end{array}\right.$$的本征值为$$k^{n}_{m}=\frac{x^{n}_{m}}{a},m=1,2,3,\cdots$$相应的本征函数为$$R_{m}(\rho)=J_{n}(\frac{x^{n}_{m}}{a}\rho)$$
+其中,$x^{n}_{m}$为$$J_{n}(x)=0$$的第$m$个正根,称之为$J_{n}(x)$的第$m$个{\heiti
+零点}.
+
+(2)本征值问题$$\left\{\begin{array}{c}\rho^{2}R^{\prime\prime}(\rho)+\rho
+R^{\prime}(\rho)+(k^{2}\rho^{2}-n^{2})R=0
+\\*[3pt]
+\frac{dR}{d\rho}|_{\rho-a}=0
+  \end{array}\right.$$的本征值为$$\widetilde{k}^{n}_{m}=\frac{\widetilde{x}^{n}_{m}}{a},m=1,2,3,\cdots$$
+相应的本征值函数为$$R_{m}(\rho)=J_{n}(\frac{\widetilde{x}^{n}_{m}}{a}\rho)$$其中$\widetilde{x}^{n}_{m}$为$$J^{\prime}_{n}(x)=0$$
+的第$m$个正根,称之为$J^{\prime}_{n}(x)$的第$m$个零点.
+
+4.Bessel函数的积分式为$$J_{n}=\frac{1}{2\pi}\int^{\pi}_{-\pi}\cos(x\sin\theta-n\theta)d\theta$$
+\subsection*{\wuhao\heiti  （二）Bessel函数的性质}
+
+1.母函数关系式$$e^{frac{x}{2}(t-\frac{1}{t})}=\sum^{\infty}_{n=-\infty}J_{n}(x)t^{n}$$
+
+2.递推公式$$\left\{\begin{array}{c}\frac{d}{dx}[x^{\nu}J_{\nu}(x)]=x^{\nu}J_{\nu-1}(x)
+\\*[3pt]
+\frac{d}{dx}[x^{-\nu}J_{\nu}(x)]=-x^{-\nu}J_{\nu+1}(x)
+  \end{array}\right.$$
+
+3.正交归一性$$\int^{a}_{0}\rho
+J_{n}(k^{n}_{m}\rho)J_{n}(k^{n}_{l}\rho)d\rho=\frac{a^{2}}{2}[J_{n+1}(k^{n}_{l}a)]^{2}\delta_{ml}$$其中,记$(N^{n}_{l})^{2}=\frac{a^{2}}{2}J^{2}_{n+1}(k^{n}_{l}a)$
+称为$J_{n}(k^{l}_{m}\rho)$的{\heiti 模方}.
+
+4.广义Fourier展开$$f(\rho)=\sum^{\infty}_{m-1}c_{m}J_{n}(k^{n}_{m}\rho)$$
+$$c_{m}=\frac{1}{\frac{a^{2}}{2}J^{2}_{n+1}(k^{n}_{m}a)}\int^{a}_{0}\rho f(\rho)J_{n}(k^{n}_{m}\rho)d\rho$$
+\subsection*{\wuhao\heiti  （三）虚宗量Bessel方程和虚宗量柱函数}
+
+1.虚宗量的Bessel方程
+
+在方程(3.2.0)中若$(\lambda-\mu)$(或$-\mu)<0$,则记$-k^{2}=(\lambda-\mu)$(或$-\mu$此时,(3.2.0)式变为
+$$\rho^{2}R^{\prime\prime}+\rho
+R^{\prime}-(k^{2}\rho^{2}+n^{2})R=0$$令$x=k\rho,y(x)=R(\rho)$且$n$换成$\nu$,则上方程又变成
+$$x^{2}y^{\prime\prime+xy^{\prime}-(x^{2}+\nu^{2})y}=0$$方程(3.2.23)和方程(3.2.24)均被称为{\heiti
+虚宗量Bessel方程}.
+
+2.虚宗量柱函数和虚宗量Bessel方程的解
+
+(1)定义$$\left\{\begin{array}{c}I_{\nu}(x)=i^{-\nu}J_{\nu}(ix)
+\\*[3pt]
+I_{-\nu}(x)=i^{\nu}J_{-\nu}(ix)
+  \end{array}\right.$$为{\heiti
+  第一类虚宗量柱函数}或$\pm\nu$阶的{\heiti 虚宗量Bessel函数}.
+
+$I_{\nu}(x)$和$I_{-\nu}(x)$均为虚宗量Bessel方程(3.2.24)的特解.
+
+当$\nu\neq$时,(3.2.24)式的通解可表示为$$y_{c}=c_{\nu}I_{\nu}(x)+d_{\nu}I_{-\nu}(x)$$
+
+当$\nu=n$时,$$I_{-n}(x)=I_{n}(x)$$
+
+(2)定义$$K_{\nu}(x)=\frac{\pi}{2}\frac{I_{-\nu}(x)-I_{\nu}(x)}{\sin\nu\pi}$$为{\heiti
+第二类虚宗量柱函数}或{\heiti
+MacDonald函数}.它是虚宗量Bessel方程(3.2.24)的另一个特解.而$$K_{n}(x)=\lim_{\nu\rightarrow
+n}\frac{\pi}{2}[\frac{I_{-\nu}(x)-I_{\nu}(x)}{\sin\nu\pi}]$$无论$\nu=n(n$为整数)与否
+$$y_{c}=A_{\nu}I_{\nu}(x)+B_{\nu}K_{\nu}(x)$$均为方程(3.2.24)的通解.
+
+\subsection*{\wuhao\heiti  （四）球Bessel方程和球Bessel函数}
+
+由第二篇第三章知,在球坐标系中对方程$\triangle u+\lambda
+u=0$分量变量所得到的关于变量$r$的方程为$$r^{2}R^{\prime\prime}(r)+r
+R^{\prime}(r)-[k^{2}r^{2}-l(l+1)]R(r)=0$$称为$l$阶的球{\heiti
+球Bessel方程}.其中$k^{2}=\lambda$.
+
+若令$x=kr,y(x)=R(r)$则球Bessel方程又可表示为$$x^{2}y^{\prime\prime}+2xy^{\prime}(x)+[x^{2}-l(l+1)]y=0$$
+进而令$y(x)=\frac{1}{\sqrt{x}}v(x)$,则球Bessel方程(3.2.32)又变为$$x^{2}v^{\prime\prime}+2xv^{\prime}(x)+[x^{2}-l(l+\frac{1}{2})^{2}]v=0$$
+
+1.球Bessel函数和球Bessel方程的解
+
+定义$$\left.
+\begin{array}
+{cccc}
+j_{l}(x)=\sqrt{\frac{\pi}{2x}}J_{l+\frac{1}{2}}(x),n_{l}(x)=\sqrt{\frac{\pi}{2x}}N_{l+\frac{1}{2}}(x) \\
+h^{1}_{l}(x)=\sqrt{\frac{\pi}{2x}}H^{1}_{l+\frac{1}{2}}(x),h^{2}_{l}(x)=\sqrt{\frac{\pi}{2x}}H^{2}_{l+\frac{1}{2}}(x)
+\end{array}
+\right\}
+$$分别称之为{\heiti 球Bessel函数、球Neumann函数}和{\heiti
+球Hankel函数},它们均为球Bessel方程(3.2.32)的线性独立的特解.
+
+易于推得$$j_{0}(x)=\frac{\sin x}{x}$$
+$$j_{1}(x)=\frac{1}{x^{2}}(\sin x-x\cos
+x)$$方程(3.2.32)的通解可表示为$$y_{c}(x)=A_{t}j_{l}(x)+B_{l}n_{l}(x)$$
+
+2.球Bessel方程的本征值问题$$\left\{\begin{array}{c}r^{2}R^{\prime\prime}(r)+r
+R^{\prime}(r)-[k^{2}r^{2}-l(l+1)]R(r)=0
+\\*[3pt]
+R(0)=$有限$\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \
+\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \
+\\*[3pt]
+ R(a)=0\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \
+  \end{array}\right.$$的本征值为$$k^{(l)}_{m}=\frac{x^{l+\frac{1}{2}}_{m}}{a},m=1,2,3,\cdots$$
+相应的本征值函数为$$R_{m}(r)=j_{l}(k^{(l)}_{m}r)$$其中,$x^{l+\frac{1}{2}}_{m}$为$J_{l+\frac{1}{2}}$的正零点.
+
+3.球Bessel函数的性质
+
+(1)正则归一性$$\int^{a}_{0}j_{l}(k^{(l)}_{m}r)j_{l}(k^{(l)}_{n}r)r^{2}dr=\frac{\pi}{2k^{(l)}_{n}}\int^{a}_{0}[J_{l+\frac{1}{2}}(k^{(l)}_{n}r)]^{2}rdr\delta_{mm}$$
+
+(2)广义Fourier展开$$f(r)=\sum^{\infty}_{m-1}c_{m}j_{l}(k^{(l)}_{m}r)$$
+$$c_{m}=\frac{\int^{a}_{0}f(r)j_{l}(k^{(l)}_{m}r)r^{2}dr}{\int^{a}_{0}[j_{l}(k^{(l)}_{m}r)]^{2}r^{2}dr}$$
+\section*{\sihao\heiti \center{三、复习思考题}}
+
+1.方程$x^{2}y^{\prime\prime}+xy^{\prime}+(x^{2}-\frac{1}{4})y=0$叫什么方程?你能写出它的一有限解吗?
+
+2.何谓方程的正则奇点?如何求方程在正则奇点领域的级数解?你能求出Bessel方程在$x=0$点领域的级数解(3.2.4)和(3.2.5)吗?
+
+3.何谓Bessel函数$J_{n}(x)$的零点?它与Bessel方程的何种本征值问题有关?有什么样的关系?
+
+4.Bessel函数的母函数是什么?$J_{\nu}(x)$当$\nu$不为整数时有无母函数?为什么?
+
+5.你能否利用Bessel函数的母函数关系式(3.2.17)推导出Bessel函数的递推公式(3.2.18)和(3.2.19)吗?
+
+6.Bessel函数有无微分表达式?若有,试写出;若无,说明为什么.
+
+7.什么是第三类柱函数?它们是否均满足Bessel方程?它们互相的关系式怎么样的?
+
+8.第二、三类柱函数?它们是否也满足递推公式(3.2.18)和(3.2.19)?为什么呢?
+
+9.$\frac{d}{dx}J_{0}(\omega x)=?,\frac{d}{dx}[xJ_{0}(\omega x)]=?$
+
+10.$\int^{1}_{0}J_{0}(\omega x)xdx=?$
+
+11.Bessel方程(3.2.3)的通解是什么?其有限解是什么?
+
+12.什么是虚宗量的Bessel方程?它经过什么样的代换可变成Bessel方程?由此你能推得虚宗量的Bessel方程的一个特解吗?
+
+13.什么是虚宗量的Bessel函数和虚宗量的Neumann函数?虚宗量Bessel方程的通解是什么?
+
+14.你能完整地写出在柱坐标中对$\triangle u+\lambda u=0$或$\triangle
+u=0$分离变量后所得到的在柱体内的分离变量形式的解吗?
+
+15.方程$\triangle
+u=0$在柱坐标系下分离变量,在什么样的边界条件下会发现虚宗量Bessel方程?虚宗量的Bessel方程是否会构造本征值问题?
+
+16.球Bessel方程是什么样的情况下出现的?它与半整数的Bessel方程又什么关系?你能理解(3.2.24)式给出的几个函数是球Bessel方程(3.2.32)的特解吗?
+
+17.试述球Bessel方程本征值问题的提法.其本征值和本征值函数是什么?
+
+18.你能写出在球坐标系中对$\triangle u+\lambda
+u=0$所得到的分离变量形式的解码?
+
+
+
+
+
+
+
+\newpage
+\end{CJK*}
+\end{document}
