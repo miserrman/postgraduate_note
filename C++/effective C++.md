@@ -1,4 +1,4 @@
-# Effective C++
+# CEffective C++
 
 ## C++代码的基本形式
 
@@ -473,4 +473,424 @@ SoftReference的特点是它的一个实例保存对一个Java对象的软引用
 
 虚引用：虚引用和前面的软引用、弱引用不同，它并不影响对象的生命周期。在java中用java.lang.ref.PhantomReference类表示。如果一个对象与虚引用关联，则跟没有引用与之关联一样，在任何时候都可能被垃圾回收器回收。PhantomReference 类实现虚引用。无法通过虚引用获取一个对象的实例，为一个对象设置虚引用关联的唯一目的就是能在这个对象被收集器回收时收到一个系统通知。
 
-## ###
+
+
+## 继承下的构造和析构
+
+构造函数：建立由内而外，先调用内部父类的构造函数
+
+析构函数：析构函数要先执行自己的析构函数，然后再调用父类的析构函数
+
+## 复合关系的解析和构造
+
+![](../pic/C++25.png)
+
+复杂情况的构造和析构
+
+![](../pic/C++26.png)
+
+**构造由内而外**
+
+Derived先调用Base的default的构造函数，再调用Component的default的构造函数，然后才执行自己。
+
+**析构由内而外**
+
+Derived的析构函数首先执行自己，然后调用Component,然后再调用Base
+
+## C++右值引用
+
+在 C++ 或者 C 语言中，一个表达式（可以是字面量、变量、对象、函数的返回值等）根据其使用场景不同，分为左值表达式和右值表达式。确切的说 C++ 中左值和右值的概念是从 C 语言继承过来的。
+
+```
+值得一提的是，左值的英文简写为“lvalue”，右值的英文简写为“rvalue”。很多人认为它们分别是"left value"、"right value" 的缩写，其实不然。lvalue 是“loactor value”的缩写，可意为存储在内存中、有明确存储地址（可寻址）的数据，而 rvalue 译为 "read value"，指的是那些可以提供数据值的数据（不一定可以寻址，例如存储于寄存器中的数据）。
+```
+
+判断某个表达式是左值还是右值：
+
+1. 可位于赋值号（=）左侧的表达式就是左值；反之，只能位于赋值号右侧的表达式就是右值。
+
+```
+int a = 5;
+5 = a; //错误，5 不能为左值
+```
+
+2. 有名称的、可以获取到存储地址的表达式即为左值；反之则是右值。
+
+注意，虽然 C++98/03 标准不支持为右值建立非常量左值引用，但允许使用常量左值引用操作右值。也就是说，常量左值引用既可以操作左值，也可以操作右值，例如：
+
+```C++
+int num = 10;
+const int &b = num;
+const int &c = 10;
+```
+
+为此，C++11 标准新引入了另一种引用方式，称为右值引用，用 "&&" 表示。
+
+右值引用可以对右值进行修改：
+
+```C++
+int && a = 10;
+a = 100;
+cout << a << endl;
+100
+```
+
+![](../pic/C++27.png)
+
+## C++型别推导
+
+```c++
+template<typename T>
+void f(T&& param);              //param现在是一个通用引用类型
+		
+int x=27;                       //如之前一样
+const int cx=x;                 //如之前一样
+const int & rx=cx;              //如之前一样
+
+f(x);                           //x是左值，所以T是int&，
+                                //param类型也是int&
+
+f(cx);                          //cx是左值，所以T是const int&，
+                                //param类型也是const int&
+
+f(rx);                          //rx是左值，所以T是const int&，
+                                //param类型也是const int&
+
+f(27);                          //27是右值，所以T是int，
+                                //param类型就是int&&
+```
+
+因为数组形参会视作指针形参，所以传值给模板的一个数组类型会被推导为一个指针类型。这意味着在模板函数`f`的调用中，它的类型形参`T`会被推导为`const char*`：
+
+```
+f(name);                        //name是一个数组，但是T被推导为const char*
+```
+
+但是现在难题来了，虽然函数不能声明形参为真正的数组，但是**可以**接受指向数组的**引用**！所以我们修改`f`为传引用：
+
+```
+template<typename T>
+void f(T& param);                       //传引用形参的模板
+```
+
+我们这样进行调用，
+
+```
+f(name);                                //传数组给f
+```
+
+`T`被推导为了真正的数组！这个类型包括了数组的大小，在这个例子中`T`被推导为`const char[13]`，`f`的形参（对这个数组的引用）的类型则为`const char (&)[13]`。是的，这种语法看起来简直有毒，但是知道它将会让你在关心这些问题的人的提问中获得大神的称号。
+
+有趣的是，可声明指向数组的引用的能力，使得我们可以创建一个模板函数来推导出数组的大小：
+
+```C++
+//在编译期间返回一个数组大小的常量值（//数组形参没有名字，
+//因为我们只关心数组的大小）
+template<typename T, std::size_t N>                     //关于
+constexpr std::size_t arraySize(T (&)[N]) noexcept      //constexpr
+{                                                       //和noexcept
+    return N;                                           //的信息
+}            
+```
+
+## 四个型别推导规则
+
+- *在模板类型推导时，有引用的实参会被视为无引用，他们的引用会被忽略*
+- *对于通用引用的推导，左值实参会被特殊对待*
+- *对于传值类型推导，`const`和/或`volatile`实参会被认为是non-`const`的和non-`volatile`的*
+- *在模板类型推导时，数组名或者函数名实参会退化为指针，除非它们被用于初始化引用*
+
+## 拆解pair的类型
+
+auto &[x, y] = priority_queue.top()
+
+## decltype
+
+```C++
+const int i = 0;                //decltype(i)是const int
+
+bool f(const Widget& w);        //decltype(w)是const Widget&
+                                //decltype(f)是bool(const Widget&)
+
+struct Point{
+    int x,y;                    //decltype(Point::x)是int
+};                              //decltype(Point::y)是int
+
+Widget w;                       //decltype(w)是Widget
+
+if (f(w))…                      //decltype(f(w))是bool
+
+template<typename T>            //std::vector的简化版本
+class vector{
+public:
+    …
+    T& operator[](std::size_t index);
+    …
+};
+
+vector<int> v;                  //decltype(v)是vector<int>
+…
+if (v[0] == 0)…                 //decltype(v[0])是int&
+```
+
+```
+template<typename Container, typename Index>    //C++14版本，
+auto authAndAccess(Container& c, Index i)       //不那么正确
+{
+    authenticateUser();
+    return c[i];                                //从c[i]中推导返回类型
+}
+```
+
+[Item2](https://github.com/kelthuzadx/EffectiveModernCppChinese/blob/master/1.DeducingTypes/item2.md)解释了函数返回类型中使用`auto`，编译器实际上是使用的模板类型推导的那套规则。如果那样的话就会这里就会有一些问题。正如我们之前讨论的，`operator[]`对于大多数`T`类型的容器会返回一个`T&`，但是[Item1](https://github.com/kelthuzadx/EffectiveModernCppChinese/blob/master/1.DeducingTypes/item1.md)解释了在模板类型推导期间，表达式的引用性（reference-ness）会被忽略。基于这样的规则，考虑它会对下面用户的代码有哪些影响：
+
+```C++
+std::deque<int> d;
+…
+authAndAccess(d, 5) = 10;               //认证用户，返回d[5]，
+                                        //然后把10赋值给它
+                                        //无法通过编译器！
+```
+
+```C++
+template<typename Container, typename Index>    //C++14版本，
+decltype(auto)                                  //可以工作，
+authAndAccess(Container& c, Index i)            //但是还需要
+{                                               //改良
+    authenticateUser();
+    return c[i];
+}
+```
+
+现在就可以了
+
+## 优先考虑别名声明而非`typedef`s
+
+尽量使用using
+
+```c++
+//使用typedef
+typedef
+    std::unique_ptr<std::unordered_map<std::string, std::string>>
+    UPtrMapSS;
+//使用using
+using UPtrMapSS =
+    std::unique_ptr<std::unordered_map<std::string, std::string>>;
+```
+
+```C++
+/FP是一个指向函数的指针的同义词，它指向的函数带有
+//int和const std::string&形参，不返回任何东西
+typedef void (*FP)(int, const std::string&);    //typedef
+
+//含义同上
+using FP = void (*)(int, const std::string&);   //别名声明
+```
+
+定义一个模板using会比typedef好用
+
+```C++
+template<typename T>                            //MyAllocList<T>是
+using MyAllocList = std::list<T, MyAlloc<T>>;   //std::list<T, MyAlloc<T>>
+                                                //的同义词
+
+MyAllocList<Widget> lw;     
+
+template<typename T>                            //MyAllocList<T>是
+struct MyAllocList {                            //std::list<T, MyAlloc<T>>
+    typedef std::list<T, MyAlloc<T>> type;      //的同义词  
+};
+
+MyAllocList<Widget>::type lw;    
+```
+
+- `typedef`不支持模板化，但是别名声明支持。
+- 别名模板避免了使用“`::type`”后缀，而且在模板中使用`typedef`还需要在前面加上`typename`
+- C++14提供了C++11所有*type traits*转换的别名声明版本
+
+## C++11 函数的引用限定符
+
+```c++
+class Widget {
+public:
+    …
+    void doWork() &;    //只有*this为左值的时候才能被调用
+    void doWork() &&;   //只有*this为右值的时候才能被调用
+}; 
+…
+Widget makeWidget();    //工厂函数（返回右值）
+Widget w;               //普通对象（左值）
+…
+w.doWork();             //调用被左值引用限定修饰的Widget::doWork版本
+                        //（即Widget::doWork &）
+makeWidget().doWork();  //调用被右值引用限定修饰的Widget::doWork版本
+                        //（即Widget::doWork &&）
+```
+
+- 函数的引用限定符（*reference qualifiers*）必须完全一样。成员函数的引用限定符是C++11很少抛头露脸的特性，所以如果你从没听过它无需惊讶。它可以限定成员函数只能用于左值或者右值。成员函数不需要`virtual`也能使用它们：
+
+## 尽量使用override
+
+声明子类是父类的重写
+
+```C++
+class Derived: public Base {
+public:
+    virtual void mf1() override;
+    virtual void mf2(unsigned int x) override;
+    virtual void mf3() && override;
+    virtual void mf4() const override;
+};
+```
+
+## 移动语义和完美转发
+
+- **移动语义**使编译器有可能用廉价的移动操作来代替昂贵的拷贝操作。正如拷贝构造函数和拷贝赋值操作符给了你控制拷贝语义的权力，移动构造函数和移动赋值操作符也给了你控制移动语义的权力。移动语义也允许创建只可移动（*move-only*）的类型，例如`std::unique_ptr`，`std::future`和`std::thread`。
+- **完美转发**使接收任意数量实参的函数模板成为可能，它可以将实参转发到其他的函数，使目标函数接收到的实参与被传递给转发函数的实参保持一致。
+
+### 形参永远是左值
+
+理解std::move和std::forward
+
+**右值引用，简单说就是绑定在右值上的引用。右值的内容可以直接移动（move）给左值对象，而不需要进行开销较大的深拷贝（deep copy）。**
+
+1. `v2 = v1` 调用的是拷贝赋值操作符，v2 复制了 v1 的内容 —— 复制语义。
+2. `v3 = std::move(v1)` 调用的是移动赋值操作符，将 v1 的内容移动给 v3 —— 移动语义。
+
+```C++
+ std::vector<int> v1{1, 2, 3, 4, 5}; 
+  std::vector<int> v2; 
+  std::vector<int> v3; 
+
+  v2 = v1; 
+  std::cout << v1.size() << std::endl;  // 输出 5
+  std::cout << v2.size() << std::endl;  // 输出 5
+
+  v3 = std::move(v1); // move
+  std::cout << v1.size() << std::endl;  // 输出0
+  std::cout << v3.size() << std::endl;  // 输出 5
+
+```
+
+使用右值封装函数，实现移动语义
+
+```C++
+#include <iostream>
+#include <string>
+#include <vector>
+
+class Foo {
+ public:
+  // 默认构造函数
+  Foo() { std::cout << "Default Constructor: " << Info() << std::endl; }
+
+  // 自定义构造函数
+  Foo(const std::string& s, const std::vector<int>& v) : s_(s), v_(v) {
+    std::cout << "User-Defined Constructor: " << Info() << std::endl;
+  }
+
+  // 析构函数
+  ~Foo() { std::cout << "Destructor: " << Info() << std::endl; }
+
+  // 拷贝构造函数
+  Foo(const Foo& f) : s_(f.s_), v_(f.v_) {
+    std::cout << "Copy Constructor: " << Info() << std::endl;
+  }
+
+  // 拷贝赋值操作符
+  Foo& operator=(const Foo& f) {
+    s_ = f.s_;
+    v_ = f.v_;
+    std::cout << "Copy Assignment: " << Info() << std::endl;
+    return *this;
+  }
+
+  // 移动构造函数
+  Foo(Foo&& f) : s_(std::move(f.s_)), v_(std::move(f.v_)) {
+    std::cout << "Move Constructor: " << Info() << std::endl;
+  }
+
+  // 移动赋值操作符
+  Foo& operator=(Foo&& f) {
+    s_ = std::move(f.s_);
+    v_ = std::move(f.v_);
+    std::cout << "Move Assignment: " << Info() << std::endl;
+    return *this;
+  }
+
+  std::string Info() {
+    return "{" + (s_.empty() ? "'empty'" : s_) + ", " +
+           std::to_string(v_.size()) + "}";
+  }
+
+ private:
+  std::string s_;
+  std::vector<int> v_;
+};
+
+int main() {
+  std::vector<int> v(1024);
+
+  std::cout << "================ Copy =======================" << std::endl;
+  Foo cf1("hello", v);
+  Foo cf2(cf1);  // 调用拷贝构造函数
+  Foo cf3;
+  cf3 = cf2;  // 调用拷贝赋值操作符
+  
+  std::cout << "================ Move =========================" << std::endl;
+  Foo f1("hello", v);
+  Foo f2(std::move(f1));  // 调用移动构造函数
+  Foo f3;
+  f3 = std::move(f2);  // 调用移动赋值操作符
+  return 0;
+}
+```
+
+```C++
+Foo GetFoo() {
+  return Foo("GetFoo", std::vector<int>(11));
+}
+....
+Foo f3("world", v3);
+....
+f3 = GetFoo(); // GetFoo 返回的是一个右值，调用移动赋值操作符
+```
+
+### 完美转发
+
+C++ 通过了一个叫 `std::forward` 的函数模板来实现完美转发。这里直接使用 Effective Modern C++ 中的例子作为说明。在前面的例子上，我们增加如下的代码：
+
+```cpp
+// 接受一个 const 左值引用
+void Process(const Foo& f) {
+  std::cout << "lvalue reference" << std::endl;
+  // ...
+}
+
+// 接受一个右值引用
+void Process(Foo&& f) {
+  std::cout << "rvalue reference" << std::endl;
+  // ...
+}
+
+template <typename T>
+void LogAndProcessNotForward(T&& a) {
+  std::cout << a.Info() << std::endl;
+  Process(a); 
+}
+
+template <typename T>
+void LogAndProcessWithForward(T&& a) {
+  std::cout << a.Info() << std::endl;
+  Process(std::forward<T>(a));
+}
+
+ LogAndProcessNotForward(f3);                         // 输出 lvalue reference
+ LogAndProcessNotForward(std::move(f3));  // 输出 lvalue reference
+
+ LogAndProcessWithForward(f3);                        // 输出 lvalue reference
+ LogAndProcessWithForward(std::move(f3));  // 输出 rvalue reference
+```
+
+**完美转发就是转发给函数右值**
+
