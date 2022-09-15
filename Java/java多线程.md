@@ -841,3 +841,10 @@ class MyThreadPool {
 }
 ```
 
+## java线程的run和start
+在 Java 的程序中使用new Thread() 只是创建了一个 Thread 类的对象，此时和普通的对象没有任何区别，并没有因为 Java 程序中创建一个 Thread 对象就在操作系统中创建一个线程，真正在操作系统中创建了一个线程是 Java 中调用 start() 方法。
+
+  run() 方法就是一个普通方法，直接使用 run()，其实就是之前使用的方法调用，并没有在操作系统层面创建新的线程，而是由调用 Thread 对象 run() 方法的主线程执行，在上面 run() 的实例中也有体现，当前执行的线程名是 main，而不是 thread1 或者 thread2。
+
+  start() 方法其实也是 Java 中的一个普通方法，查看 start() 方法的源码，可以看到在 start() 源码中调用了private native void start0();，start0() 方法 是一个 native 方法，它的实现是用 C++ 实现的，在 start0() 方法中调用到了 cpppthread_create() 方法，而这个方法才是在操作系统中创建了一个线程。
+  另外，在 start() 方法中并没有看到任何与调用 run() 方法有关的代码，在 start() 方法的注释中有一段话，说明了是在 JVM 中调用了 run() 方法。
